@@ -42,14 +42,15 @@ h1 {
 .Z {
     background-color: red;
 }
-.N {
+.S {
     background-color: rgb(45, 220, 0);
 }
 .I {
-    background-color: rgb(0, 120, 255);
+    background-color: cyan;
 }
 .T {
-    background-color: rgb(115, 0, 200);
+    background-color: blueviolet;
+    *background-color: rgb(115, 0, 200);
 }
 
 .hidden {
