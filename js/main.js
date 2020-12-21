@@ -4,8 +4,47 @@
  * 
  */
 {
+    const NUMBER_ROWS    = 20;
+    const NUMBER_COLUMNS = 10;
+
+    const createBoardGame = () => {
+        const fragment = new DocumentFragment();
+        let array = [];
+        for (let i = 0; i < NUMBER_ROWS; i++) {
+            array.push([]);
+            for (let j = 0; j < NUMBER_COLUMNS; j++) {
+                const div = document.createElement("div");
+                div.classList = 'square empty';
+                array[i].push(div);
+                fragment.appendChild(div);
+            }
+        }
+        return [array,fragment];
+    }
+
+    const render = function(boardGameDOM,boardGame) {
+        setInterval(
+            () => {
+                for (let i = 0; i < boardGameDOM.length; i++) 
+                    for (let j = 0; j < boardGameDOM[0].length; j++) 
+                        boardGameDOM[i][j].classList = boardGame[i][j] == ' ' ? 'square empty' : `square ${boardGame[i][j]}`;
+            }, 100);
+    }
+
     const init = () => {
-        
+        const board = document.getElementById("board");
+        let [boardGame,fragment] = createBoardGame();
+        const tetris = new TetrisGame(boardGame.length,boardGame[0].length);
+
+        board.appendChild(fragment);
+
+        render(boardGame,tetris.getBoardGame());
+
+        document.addEventListener("keydown", e => {
+            if (e.code == 'ArrowUp')
+                tetris.rotatePiece();
+        })
+
     }
     document.addEventListener("DOMContentLoaded",init);
 }
