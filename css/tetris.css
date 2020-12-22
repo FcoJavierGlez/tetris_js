@@ -28,7 +28,7 @@ h1 {
     width: var(--width_square_min_500);
 }
 .empty {
-    background-color: gainsboro;
+    background-color: rgb(125, 125, 125);
 }
 .L {
     background-color: orange;
@@ -36,7 +36,7 @@ h1 {
 .J {
     background-color: rgb(0, 60, 255);
 }
-.D {
+.O {
     background-color: rgb(235, 235, 0);
 }
 .Z {
