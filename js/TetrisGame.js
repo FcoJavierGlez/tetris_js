@@ -16,8 +16,8 @@ class TetrisGame {
 
     constructor(numberRows = 20,numberColumns = 10) {
         this.#boardGame = this.#createBoardGame(numberRows,numberColumns);
-        this.#pieces.push(new Piece('T',this.#boardGame));
-        //this.#pieces.push(new Piece('S',this.#boardGame));
+        this.#pieces.push(new Piece(this.#generatePiece(),this.#boardGame));
+        this.#pieces.push(new Piece(this.#generatePiece(),this.#boardGame));
     }
 
     getBoardGame = function() {
@@ -29,14 +29,33 @@ class TetrisGame {
     }
 
     rotatePiece = function() {
+        if (this.#idPlay == 0) return;
         this.#pieces[0].rotate();
+    }
+
+    #generatePiece = function() {
+        const LETTER = {
+            '0': 'L',
+            '1': 'J',
+            '2': 'Z',
+            '3': 'S',
+            '4': 'T',
+            '5': 'I'
+        }
+        return LETTER[ parseInt( Math.random() * 5 ) ]; //need * 6, but I must create 'I' piece rotation before
     }
 
     #play = function() {
         let tetris = this;
         return setInterval(
-            //pending
-        );
+            () => {
+                if (tetris.#pieces[0].getFixed()) {
+                    tetris.#pieces.shift()/*  = null */;
+                    tetris.#pieces.push(new Piece(this.#generatePiece(),this.#boardGame));
+                }
+                tetris.#pieces[0].descend();
+                tetris.#cleanboardGame();
+            }, 500);
     }
 
     #pause = function() {
