@@ -28,21 +28,27 @@
                 for (let i = 0; i < boardGameDOM.length; i++) 
                     for (let j = 0; j < boardGameDOM[0].length; j++) 
                         boardGameDOM[i][j].classList = boardGame[i][j] == ' ' ? 'square empty' : `square ${boardGame[i][j]}`;
-            }, 100);
+            }, 50);
     }
 
     const init = () => {
         const board = document.getElementById("board");
         let [boardGame,fragment] = createBoardGame();
-        const tetris = new TetrisGame(boardGame.length,boardGame[0].length);
+        const tetris = new TetrisGame(20,10);
 
         board.appendChild(fragment);
 
         render(boardGame,tetris.getBoardGame());
 
         document.addEventListener("keydown", e => {
-            if (e.code == 'ArrowUp')
+            if (e.code == 'Space')
+                tetris.togglePause();
+            else if (e.code == 'ArrowLeft' || e.code == 'ArrowRight')
+                tetris.movePiece( e.code == 'ArrowLeft' ? 'LEFT' : 'RIGHT');
+            else if (e.code == 'ArrowUp')
                 tetris.rotatePiece();
+            else if (e.code == 'ArrowDown')
+                tetris.descendPiece();
         })
 
     }
