@@ -6,8 +6,8 @@ class Piece {
     #character = '';
     #currentRotation = 0;
     #coordinates   = [
-        [[0,0],[0,1],[0,2]],
-        [[],[1,1],[]]
+        [[],[0,1],[]],
+        [[1,0],[1,1],[1,2]]
         /* [[0,0],[0,1],[]],
         [[],[1,1],[1,2]] */
         /* [[],[],[0,2]],
@@ -17,6 +17,22 @@ class Piece {
     ]
     #rotation = {
         0: [
+            [[0,2],[1,1],[2,0]],
+            [[-1,1],[0,0],[1,-1]]
+        ],
+        1: [
+            [[2,0],[1,-1],[0,-2]],
+            [[1,1],[0,0],[-1,-1]]
+        ],
+        2: [
+            [[0,-2],[-1,-1],[-2,0]],
+            [[1,-1],[0,0],[-1,1]]
+        ],
+        3: [
+            [[-2,0],[-1,1],[0,2]],
+            [[-1,-1],[0,0],[1,1]]
+        ]
+        /* 0: [
             [[0,1],[1,0],[2,-1]],
             [[-1,0],[0,-1],[1,-2]]
         ],
@@ -31,7 +47,7 @@ class Piece {
         3: [
             [[-2,0],[-1,1],[0,2]],
             [[-1,-1],[0,0],[1,1]]
-        ]
+        ] */
     }
     #boardGame = [];
 
@@ -85,24 +101,24 @@ class Piece {
         boardGameRowLength = parseInt(boardGameRowLength / 2);
         const coordinates = {
             'L': [
-                [            [],                          [],        [-2,boardGameRowLength + 1]],  //     []
+                [[],[],[-2,boardGameRowLength + 1]],                                                //     []
                 [[-1,boardGameRowLength - 1],[-1,boardGameRowLength],[-1,boardGameRowLength + 1]]   // [][][]
             ],
             'J': [
-                [[-2,boardGameRowLength - 1],           [],                       []            ],  // []
+                [[-2,boardGameRowLength - 1],[],[]],                                                // []
                 [[-1,boardGameRowLength - 1],[-1,boardGameRowLength],[-1,boardGameRowLength + 1]]   // [][][]
             ],
             'Z': [
-                [[-2,boardGameRowLength - 1],[-2,boardGameRowLength],            []             ],  // [][]
-                [            [],             [-1,boardGameRowLength],[-1,boardGameRowLength + 1]]   //   [][]
+                [[-2,boardGameRowLength - 1],[-2,boardGameRowLength],[]],                           // [][]
+                [[],[-1,boardGameRowLength],[-1,boardGameRowLength + 1]]                            //   [][]
             ],
             'S': [
-                [            [],             [-2,boardGameRowLength],[-2,boardGameRowLength + 1]],  //   [][]
-                [[-1,boardGameRowLength - 1],[-1,boardGameRowLength],             []            ]   // [][]
+                [[],[-2,boardGameRowLength],[-2,boardGameRowLength + 1]],                           //   [][]
+                [[-1,boardGameRowLength - 1],[-1,boardGameRowLength],[]]                            // [][]
             ],
             'T': [
-                [[-2,boardGameRowLength - 1],[-2,boardGameRowLength],[-2,boardGameRowLength + 1]],  // [][][]
-                [              [],           [-1,boardGameRowLength],              []           ]   //   []  
+                [[],[-2,boardGameRowLength],[]],                                                    //   []
+                [[-1,boardGameRowLength - 1],[-1,boardGameRowLength],[-1,boardGameRowLength + 1]]   // [][][]
             ],
             'I': [
                 /* [[-2,boardGameRowLength - 1],[-2,boardGameRowLength],[-2,boardGameRowLength + 1]],
