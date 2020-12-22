@@ -8,9 +8,10 @@
 
 class TetrisGame {
     static #MAX_SCORE = 0;
-    #boardGame        = [];
     #numRowsDeleted   = 0;
     #score            = 0;
+    #idPlay           = 0;
+    #boardGame        = [];
     #pieces           = [];
 
     constructor(numberRows = 20,numberColumns = 10) {
@@ -23,8 +24,24 @@ class TetrisGame {
         return this.#boardGame;
     }
 
+    togglePause = function() {
+        this.#idPlay == 0 ? (this.#idPlay = this.#play()) : this.#pause();
+    }
+
     rotatePiece = function() {
         this.#pieces[0].rotate();
+    }
+
+    #play = function() {
+        let tetris = this;
+        return setInterval(
+            //pending
+        );
+    }
+
+    #pause = function() {
+        clearInterval(this.#idPlay);
+        this.#idPlay = 0;
     }
 
     #createBoardGame = function(numberRows,numberColumns) {
