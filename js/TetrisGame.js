@@ -14,14 +14,27 @@ class TetrisGame {
     #boardGame        = [];
     #pieces           = [];
 
-    constructor(numberRows = 20,numberColumns = 10) {
-        this.#boardGame = this.#createBoardGame(numberRows,numberColumns);
-        this.#pieces.push(new Piece(this.#generatePiece(),this.#boardGame));
-        this.#pieces.push(new Piece(this.#generatePiece(),this.#boardGame));
+    constructor(numberOfRows = 20, numberOfColumns = 10) {
+        this.#boardGame    = this.#createBoardGame(numberOfRows,numberOfColumns);
+        this.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
+        this.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
     }
 
     getBoardGame = function() {
         return this.#boardGame;
+    }
+
+    getCoordinatesNextPiece() {
+        /* const coordinates = {
+            'L': [],
+            'J': [],
+            'Z': [],
+            'S': [],
+            'T': [],
+            'O': [],
+            'I': []
+        } */
+        return this.#pieces[1].getCharacter();
     }
 
     togglePause = function() {
@@ -33,6 +46,16 @@ class TetrisGame {
         this.#pieces[0].rotate();
     }
 
+    movePiece = function(direction) {
+        if (this.#idPlay == 0) return;
+        this.#pieces[0].move(0,direction == 'LEFT' ? -1 : 1);
+    }
+
+    descendPiece = function() {
+        if (this.#idPlay == 0) return;
+        this.#pieces[0].move(1);
+    }
+
     #generatePiece = function() {
         const LETTER = {
             '0': 'L',
@@ -40,9 +63,10 @@ class TetrisGame {
             '2': 'Z',
             '3': 'S',
             '4': 'T',
-            '5': 'I'
+            '5': 'O',
+            '6': 'I'
         }
-        return LETTER[ parseInt( Math.random() * 5 ) ]; //need * 6, but I must create 'I' piece rotation before
+        return LETTER[ parseInt( Math.random() * 7 ) ]; //need * 7, but I must create 'I' piece rotation before
     }
 
     #play = function() {
@@ -50,11 +74,12 @@ class TetrisGame {
         return setInterval(
             () => {
                 if (tetris.#pieces[0].getFixed()) {
-                    tetris.#pieces.shift()/*  = null */;
-                    tetris.#pieces.push(new Piece(this.#generatePiece(),this.#boardGame));
+                    tetris.#pieces.shift();
+                    tetris.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
+                    tetris.#cleanboardGame();
                 }
-                tetris.#pieces[0].descend();
-                tetris.#cleanboardGame();
+                console.log(tetris.#pieces[1]);
+                tetris.#pieces[0].move(1);
             }, 500);
     }
 
@@ -104,5 +129,4 @@ class TetrisGame {
             this.#replaceRowByOtherRow(currentRow,rowToCopy);
         }
     }
-
 }
