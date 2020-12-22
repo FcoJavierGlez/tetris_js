@@ -3,57 +3,24 @@
  */
 
 class Piece {
-    #character = '';
+    #character       = '';
     #currentRotation = 0;
-    #coordinates   = [
-        [[],[0,1],[]],
-        [[1,0],[1,1],[1,2]]
-        /* [[0,0],[0,1],[]],
-        [[],[1,1],[1,2]] */
-        /* [[],[],[0,2]],
-        [[1,0],[1,1],[1,2]] */
-        /* [[0,0],[0,1],[0,2]],
-        [[1,0],[1,1],[1,2]] */
-    ]
-    #rotation = {
-        0: [
-            [[0,2],[1,1],[2,0]],
-            [[-1,1],[0,0],[1,-1]]
-        ],
-        1: [
-            [[2,0],[1,-1],[0,-2]],
-            [[1,1],[0,0],[-1,-1]]
-        ],
-        2: [
-            [[0,-2],[-1,-1],[-2,0]],
-            [[1,-1],[0,0],[-1,1]]
-        ],
-        3: [
-            [[-2,0],[-1,1],[0,2]],
-            [[-1,-1],[0,0],[1,1]]
-        ]
-        /* 0: [
-            [[0,1],[1,0],[2,-1]],
-            [[-1,0],[0,-1],[1,-2]]
-        ],
-        1: [
-            [[1,1],[0,0],[-1,-1]],
-            [[0,2],[-1,1],[-2,0]]
-        ],
-        2: [
-            [[1,-2],[0,-1],[-1,0]],
-            [[2,-1],[1,0],[0,1]]
-        ],
-        3: [
-            [[-2,0],[-1,1],[0,2]],
-            [[-1,-1],[0,0],[1,1]]
-        ] */
-    }
-    #boardGame = [];
+    #coordinates     = [];
+    #boardGame       = [];
 
     constructor(character,boardGame = null) { //retirar null
         this.#character = character;
         this.#boardGame = boardGame;
+        this.#coordinates = [
+            [[],[0,1],[]],
+            [[1,0],[1,1],[1,2]]
+            /* [[0,0],[0,1],[]],
+            [[],[1,1],[1,2]] */
+            /* [[],[],[0,2]],
+            [[1,0],[1,1],[1,2]] */
+            /* [[0,0],[0,1],[0,2]],
+            [[1,0],[1,1],[1,2]] */
+        ]; //= this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
         this.#printPiece();
     }
 
@@ -63,7 +30,7 @@ class Piece {
 
     rotate = function () {
         if (this.#coordinates.length == 2 && this.#coordinates[0].length == 2) return;
-        const rotation = this.#rotation[this.#currentRotation];
+        const rotation = this.#getCoordinatesRotation(this.#currentRotation);
         this.#cleanPiece();
         for (let i = 0; i < this.#coordinates.length; i++) {
             for (let j = 0; j < this.#coordinates[0].length; j++) {
@@ -74,7 +41,28 @@ class Piece {
         }
         this.#currentRotation = this.#currentRotation == 3 ? 0 : this.#currentRotation + 1;
         this.#printPiece();
-        //console.log(this.#coordinates);
+    }
+
+    #getCoordinatesRotation = function(currentRotation) {
+        const rotation = {
+            0: [
+                [[0,2],[1,1],[2,0]],
+                [[-1,1],[0,0],[1,-1]]
+            ],
+            1: [
+                [[2,0],[1,-1],[0,-2]],
+                [[1,1],[0,0],[-1,-1]]
+            ],
+            2: [
+                [[0,-2],[-1,-1],[-2,0]],
+                [[1,-1],[0,0],[-1,1]]
+            ],
+            3: [
+                [[-2,0],[-1,1],[0,2]],
+                [[-1,-1],[0,0],[1,1]]
+            ]
+        }
+        return rotation[currentRotation];
     }
 
     #cleanPiece = function() {
@@ -97,7 +85,7 @@ class Piece {
             }
     }
 
-    #createCoordinates = function(character,boardGameRowLength) {
+    #createInitialCoordinates = function(character,boardGameRowLength) {
         boardGameRowLength = parseInt(boardGameRowLength / 2);
         const coordinates = {
             'L': [
@@ -120,9 +108,8 @@ class Piece {
                 [[],[-2,boardGameRowLength],[]],                                                    //   []
                 [[-1,boardGameRowLength - 1],[-1,boardGameRowLength],[-1,boardGameRowLength + 1]]   // [][][]
             ],
-            'I': [
-                /* [[-2,boardGameRowLength - 1],[-2,boardGameRowLength],[-2,boardGameRowLength + 1]],
-                [[-1,boardGameRowLength - 1],[-1,boardGameRowLength],[-1,boardGameRowLength + 1]] */
+            'I': [                                                                                  // [][][][]
+                /* [[-1,boardGameRowLength - 1],[-1,boardGameRowLength],[-1,boardGameRowLength + 1],[-1,boardGameRowLength + 2]] */
             ]
         }
         return coordinates[character];
