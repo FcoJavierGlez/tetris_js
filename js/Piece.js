@@ -157,7 +157,6 @@ class Piece {
     }
 
     #printPiece = function() {
-        
         for (let i = 0; i < this.#coordinates.length; i++) 
             for (let j = 0; j < this.#coordinates[0].length; j++) {
                 if (!this.#coordinates[i][j].length) continue;
