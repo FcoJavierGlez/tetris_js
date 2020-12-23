@@ -38,7 +38,7 @@ class Piece {
         this.#cleanPiece();
         newCoordinates = this.#calculateCoordinatesAfterMove(newCoordinates,row,col);
         this.#coordinates = this.#validateCoordinates(newCoordinates) ? newCoordinates : this.#coordinates;
-        this.#fixed = this.#checkUnderCollision(newCoordinates);
+        this.#fixed = this.#checkUnderCollision(this.#coordinates);
         this.#printPiece();
     }
 
@@ -107,15 +107,15 @@ class Piece {
         return true;
     }
 
-    #checkUnderCollision = function(newCoordinates) {
-        for (let i = 0; i < newCoordinates.length; i++) 
-            for (let j = 0; j < newCoordinates[0].length; j++) {
-                if (!newCoordinates[i][j].length) continue;
-                const row = newCoordinates[i][j][0];
-                const col = newCoordinates[i][j][1];
+    #checkUnderCollision = function(coordinates) {
+        for (let i = 0; i < coordinates.length; i++) 
+            for (let j = 0; j < coordinates[0].length; j++) {
+                if (!coordinates[i][j].length) continue;
+                const row = coordinates[i][j][0];
+                const col = coordinates[i][j][1];
                 if (row < 0 || col < 0 || col > this.#boardGame[0].length - 1) continue;
                 if (row == this.#boardGame.length - 1) return true;
-                if (this.#boardGame[row][col] != ' ' && !this.#checkCoordinateIsPieceSelf([row,col])) return true;
+                if (this.#boardGame[row + 1][col] != ' ' && !this.#checkCoordinateIsPieceSelf([row + 1,col])) return true;
             }
         return false;
     }
