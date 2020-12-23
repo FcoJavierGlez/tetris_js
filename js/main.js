@@ -4,17 +4,14 @@
  * 
  */
 {
-    const NUMBER_ROWS    = 20;
-    const NUMBER_COLUMNS = 10;
-
-    const createBoardGame = () => {
+    const createGrid = (rows,colunms,boardGame = false) => {
         const fragment = new DocumentFragment();
         let array = [];
-        for (let i = 0; i < NUMBER_ROWS; i++) {
+        for (let i = 0; i < rows; i++) {
             array.push([]);
-            for (let j = 0; j < NUMBER_COLUMNS; j++) {
+            for (let j = 0; j < colunms; j++) {
                 const div = document.createElement("div");
-                div.classList = 'square empty';
+                div.classList = boardGame ? 'square empty' : 'square';
                 array[i].push(div);
                 fragment.appendChild(div);
             }
@@ -22,23 +19,33 @@
         return [array,fragment];
     }
 
-    const render = function(boardGameDOM,boardGame) {
+    const renderGrid = (elementsDOM,array,boardGame = false) => {
+        for (let i = 0; i < elementsDOM.length; i++) 
+            for (let j = 0; j < elementsDOM[0].length; j++) 
+                elementsDOM[i][j].classList = boardGame ? 
+                    array[i][j] == ' ' ? 'square empty' : `square ${array[i][j]}` :
+                    array[i][j] == ' ' ? 'square' : `square ${array[i][j]}`;
+    }
+
+    const render = function(boardGameDOM,nextPieceDOM,game) {
         setInterval(
             () => {
-                for (let i = 0; i < boardGameDOM.length; i++) 
-                    for (let j = 0; j < boardGameDOM[0].length; j++) 
-                        boardGameDOM[i][j].classList = boardGame[i][j] == ' ' ? 'square empty' : `square ${boardGame[i][j]}`;
+                renderGrid(boardGameDOM,game.getBoardGame(),true);
+                renderGrid(nextPieceDOM,game.getInfoPreviewNextPiece());
             }, 50);
     }
 
     const init = () => {
-        const board = document.getElementById("board");
-        let [boardGame,fragment] = createBoardGame();
-        const tetris = new TetrisGame(20,10);
+        const board     = document.getElementById("board");
+        const previewer = document.getElementById("next-piece");
+        const tetris    = new TetrisGame(20,10);
+        let [boardGame,fragment]             = createGrid(20,10,true);
+        let [nextPieceDOM,fragmentPreviewer] = createGrid(2,4);
 
         board.appendChild(fragment);
+        previewer.appendChild(fragmentPreviewer);
 
-        render(boardGame,tetris.getBoardGame());
+        render(boardGame,nextPieceDOM,tetris);
 
         document.addEventListener("keydown", e => {
             if (e.code == 'Space')
