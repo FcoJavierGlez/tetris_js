@@ -24,17 +24,17 @@ class TetrisGame {
         return this.#boardGame;
     }
 
-    getCoordinatesNextPiece() {
-        /* const coordinates = {
-            'L': [],
-            'J': [],
-            'Z': [],
-            'S': [],
-            'T': [],
-            'O': [],
-            'I': []
-        } */
-        return this.#pieces[1].getCharacter();
+    getInfoPreviewNextPiece() {
+        const coordinates = {
+            'L': [[[],[],[0,2],[]],[[1,0],[1,1],[1,2],[]]],
+            'J': [[[0,0],[],[],[]],[[1,0],[1,1],[1,2],[]]],
+            'Z': [[[0,0],[0,1],[],[]],[[],[1,1],[1,2],[]]],
+            'S': [[[],[0,1],[0,2],[]],[[1,0],[1,1],[],[]]],
+            'T': [[[],[0,1],[],[]],[[1,0],[1,1],[1,2],[]]],
+            'O': [[[0,0],[0,1],[],[]],[[1,0],[1,1],[],[]]],
+            'I': [[[],[],[],[]],[[1,0],[1,1],[1,2],[1,3]]]
+        }
+        return [coordinates[this.#pieces[1].getCharacter()],this.#pieces[1].getCharacter()];
     }
 
     togglePause = function() {
