@@ -17,7 +17,6 @@ class Piece {
         this.#character = character;
         this.#boardGame = boardGame;
         this.#coordinates = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
-        this.#printPiece();
     }
 
     getCharacter = function() {
@@ -33,27 +32,27 @@ class Piece {
     }
 
     move = function(row,col = 0) {
-        if (this.#fixed) return;
         let newCoordinates = JSON.parse( JSON.stringify(this.#coordinates) );
-        this.#cleanPiece();
+        if (this.#fixed) return;
         newCoordinates = this.#calculateCoordinatesAfterMove(newCoordinates,row,col);
-        this.#coordinates = this.#validateCoordinates(newCoordinates) ? newCoordinates : this.#coordinates;
+        this.#reDrawPiece(newCoordinates);
         this.#fixed = this.#checkUnderCollision(this.#coordinates);
-        this.#printPiece();
     }
 
     rotate = function () {
-        if (this.#fixed) return;
         let newCoordinates = JSON.parse( JSON.stringify(this.#coordinates) );
-        let coordinatesValide = false;
+        if (this.#fixed) return;
         if (this.#coordinates.length == 2 && this.#coordinates[0].length == 2) return;
-        this.#cleanPiece();
         newCoordinates = this.#calculateCoordinatesAfterRotation(newCoordinates, newCoordinates.length == 1 ? 
             this.#getCoordinatesRotation(4) : this.#getCoordinatesRotation(this.#currentRotation));
-        coordinatesValide = this.#validateCoordinates(newCoordinates);
-        this.#currentRotation = !coordinatesValide ? this.#currentRotation : this.#currentRotation == 3 ? 0 : this.#currentRotation + 1;
-        this.#coordinates = coordinatesValide ? newCoordinates : this.#coordinates;
-        this.#printPiece();
+        this.#reDrawPiece(newCoordinates);
+        this.#currentRotation = !this.#validateCoordinates(newCoordinates) ? this.#currentRotation : this.#currentRotation == 3 ? 0 : this.#currentRotation + 1;
+    }
+
+    #reDrawPiece = function(newCoordinates) {
+        this.#cleanOrPrintPiece();
+        this.#coordinates = this.#validateCoordinates(newCoordinates) ? newCoordinates : this.#coordinates;
+        this.#cleanOrPrintPiece(true);
     }
 
     #calculateCoordinatesAfterMove = function(coordinates,row,col) {
@@ -145,25 +144,14 @@ class Piece {
         return rotation[currentRotation];
     }
 
-    #cleanPiece = function() {
+    #cleanOrPrintPiece = function(print = false) {
         for (let i = 0; i < this.#coordinates.length; i++) 
             for (let j = 0; j < this.#coordinates[0].length; j++) {
                 if (!this.#coordinates[i][j].length) continue;
                 const row = this.#coordinates[i][j][0];
                 const col = this.#coordinates[i][j][1];
                 if (row < 0 || row > this.#boardGame.length || col < 0 || col > this.#boardGame[0].length) continue;
-                this.#boardGame[row][col] = ' ';
-            }
-    }
-
-    #printPiece = function() {
-        for (let i = 0; i < this.#coordinates.length; i++) 
-            for (let j = 0; j < this.#coordinates[0].length; j++) {
-                if (!this.#coordinates[i][j].length) continue;
-                const row = this.#coordinates[i][j][0];
-                const col = this.#coordinates[i][j][1];
-                if (row < 0 || row > this.#boardGame.length || col < 0 || col > this.#boardGame[0].length) continue;
-                this.#boardGame[row][col] = this.#character;
+                this.#boardGame[row][col] = print ? this.#character : ' ';
             }
     }
 
