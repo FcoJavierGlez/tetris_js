@@ -34,7 +34,7 @@ class TetrisGame {
             'O': [['O','O',' ',' '],['O','O',' ',' ']],
             'I': [[' ',' ',' ',' '],['I','I','I','I']]
         }
-        return [coordinates[this.#pieces[1].getCharacter()],this.#pieces[1].getCharacter()];
+        return coordinates[this.#pieces[1].getCharacter()];
     }
 
     togglePause = function() {
@@ -78,7 +78,6 @@ class TetrisGame {
                     tetris.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
                     tetris.#cleanboardGame();
                 }
-                console.log(tetris.#pieces[1]);
                 tetris.#pieces[0].move(1);
             }, 500);
     }
