@@ -7,21 +7,39 @@
  */
 
 class TetrisGame {
-    static #MAX_SCORE = 0;
-    #numRowsDeleted   = 0;
-    #score            = 0;
-    #idPlay           = 0;
-    #boardGame        = [];
-    #pieces           = [];
+    static #MAX_SCORE   = 0;
+    static #LIMIT_SCORE = 999999;
+    static #LIMIT_LEVEL = 20;
 
-    constructor(numberOfRows = 20, numberOfColumns = 10) {
-        this.#boardGame    = this.#createBoardGame(numberOfRows,numberOfColumns);
+    #lines              = 0;
+    #score              = 0;//999999
+    #idPlay             = 0;
+    #boardGame          = [];
+    #pieces             = [];
+    #endGame            = false;
+
+    constructor(numberOfRows = 20, numberOfColumns = 10,maxScore) {
+        TetrisGame.#MAX_SCORE = maxScore;
+        this.#boardGame       = this.#createBoardGame(numberOfRows,numberOfColumns);
         this.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
         this.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
     }
 
     getBoardGame = function() {
         return this.#boardGame;
+    }
+
+    getLines = function() {
+        return this.#lines;
+    }
+
+    getLevel = function() {
+        let currentLevel = 0;
+        return (currentLevel = parseInt(this.#lines / 10)) > TetrisGame.#LIMIT_LEVEL ? TetrisGame.#LIMIT_LEVEL : currentLevel;
+    }
+
+    getScore = function() {
+        return this.#score;
     }
 
     getInfoPreviewNextPiece() {
@@ -38,6 +56,7 @@ class TetrisGame {
     }
 
     togglePause = function() {
+        if (this.#endGame) return;
         this.#idPlay == 0 ? (this.#idPlay = this.#play()) : this.#pause();
     }
 
@@ -54,6 +73,8 @@ class TetrisGame {
     descendPiece = function() {
         if (this.#idPlay == 0) return;
         this.#pieces[0].move(1);
+        if (this.#pieces[0].getUnderCollision()) this.#pieces[0].enableFixed();
+        else this.#score = this.#score + 1 > TetrisGame.#LIMIT_SCORE ? TetrisGame.#LIMIT_SCORE : ++this.#score;
     }
 
     #generatePiece = function() {
@@ -73,12 +94,18 @@ class TetrisGame {
         let tetris = this;
         return setInterval(
             () => {
-                if (tetris.#pieces[0].getFixed()) {
+                if (tetris.#pieces[0].getFixed() && tetris.#pieces[0].getOverFlow()) {
+                    tetris.#endGame = true;
+                    tetris.#pause();
+                    console.log('Has perdido');
+                }
+                else if (tetris.#pieces[0].getFixed()) {
                     tetris.#pieces.shift();
                     tetris.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
                     tetris.#cleanboardGame();
                 }
-                tetris.#pieces[0].move(1);
+                if (!tetris.#pieces[0].getUnderCollision())
+                    tetris.#pieces[0].move(1);
             }, 500);
     }
 
@@ -120,6 +147,7 @@ class TetrisGame {
         for (let i = this.#boardGame.length - 1; i > -1; i--) 
             this.#checkCleanRow(this.#boardGame[i]) ? rowToClean.push(i) : false;
         if (rowToClean.length == 0) return;
+        this.#lines += rowToClean.length;
         for (let currentRow = this.#boardGame.length - 1; currentRow > -1; currentRow--) {
             if (currentRow > rowToClean[0]) continue;
             do {
