@@ -47,7 +47,7 @@ h1 {
     background-color: rgb(50, 98, 255);
 }
 .O {
-    background-color: rgb(235, 235, 0);
+    background-color: gold;
 }
 .Z {
     background-color: red;
@@ -95,7 +95,7 @@ h1 {
     border: 2px solid red;
 }
 
-#score, #time, #next-piece {
+#level, #score, #lines, #next-piece {
     background-color: rgb(58, 58, 58);
     border: 4px solid black;
     border-radius: 10px;
@@ -105,18 +105,14 @@ h1 {
     height: 25px;
     display: grid;
     align-items: center;
-    text-align: right;
     color: red;
     font-family: 'Digital-clock';
     font-size: 24px;
+    text-align: center;
 }
 
-#time {
-    width: 60px;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#score {
+    text-align: right;
 }
 
 #next-piece {
@@ -146,12 +142,12 @@ h1 {
         height: var(--width_square_min_700);
         width: var(--width_square_min_700);
     }
-    #score, #time {
+    #level, #score, #lines {
         width: 65px;
         height: 35px;
         font-size: 30px;
     }
-    #time {
+    #score {
         width: 85px;
         font-size: 25px;
     }
@@ -181,12 +177,12 @@ h1 {
         height: var(--width_square_min_900);
         width: var(--width_square_min_900);
     }
-    #score, #time {
+    #level, #score, #lines {
         width: 90px;
         height: 50px;
         font-size: 46px;
     }
-    #time {
+    #score {
         width: 140px;
         font-size: 40px;
     }
@@ -216,12 +212,12 @@ h1 {
         height: var(--width_square_min_1100);
         width: var(--width_square_min_1100);
     }
-    #score, #time, #next-piece {
+    #level, #score, #lines, #next-piece {
         width: 125px;
         height: 70px;
         font-size: 65px;
     }
-    #time {
+    #score {
         width: 190px;
         font-size: 50px;
     }
@@ -234,13 +230,13 @@ h1 {
         height: var(--width_square_min_700);
         width: var(--width_square_min_700);
     }
-    #score, #time, #next-piece {
+    #level, #score, #lines, #next-piece {
         width: 150px;
         height: 90px;
         font-size: 80px;
     }
-    #time {
-        width: 200px;
+    #score {
+        /* width: 200px; */
         font-size: 50px;
     }
 }
