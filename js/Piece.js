@@ -14,7 +14,7 @@ class Piece {
     #underCollision   = false;
     #fixed            = false;
     #idCountdownFixed = 0;
-    #timerToFixed     = 0;
+    #timerToFixed     = 1000;
 
     constructor(character,boardGame) {
         this.#character = character;
@@ -68,7 +68,7 @@ class Piece {
         const piece = this;
         return setInterval(
             () => {
-                piece.#fixed = (piece.#timerToFixed += 100) == 1000;//500
+                piece.#fixed = (piece.#timerToFixed -= 100) == 0;//500
                 piece.#fixed ? piece.#disableCountDownFixed(piece.#idCountdownFixed) : false;
             }, 100);
     }
