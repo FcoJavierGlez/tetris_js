@@ -114,9 +114,9 @@ class TetrisGame {
         this.#idPlay = 0;
     }
 
-    #countPointsEarned = function(nFilas) {
+    #countPointsEarned = function(nRows) {
         const points = this.getLevel() == 0 ? 50 : 100 * this.getLevel();
-        return nFilas * points + (nFilas - 1) * points;
+        return nRows * points + (nRows - 1) * points;
     }
 
     #createBoardGame = function(numberRows,numberColumns) {
