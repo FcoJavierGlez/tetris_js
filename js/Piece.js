@@ -128,8 +128,9 @@ class Piece {
                 if (!newCoordinates[i][j].length) continue;
                 const row = newCoordinates[i][j][0];
                 const col = newCoordinates[i][j][1];
+                if (col < 0 || col > this.#boardGame[0].length - 1) return false;
                 if (row < 0) continue;
-                if (row > this.#boardGame.length - 1 || col < 0 || col > this.#boardGame[0].length - 1) return false;
+                if (row > this.#boardGame.length - 1) return false;
                 if (this.#boardGame[row][col] != ' ' && !this.#checkCoordinateIsPieceSelf([row,col])) return false;
             }
         return true;
