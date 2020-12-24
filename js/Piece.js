@@ -7,11 +7,14 @@
  */
 
 class Piece {
-    #character       = '';
-    #currentRotation = 0;
-    #coordinates     = [];
-    #boardGame       = [];
-    #fixed           = false;
+    #character        = '';
+    #currentRotation  = 0;
+    #coordinates      = [];
+    #boardGame        = [];
+    #underCollision   = false;
+    #fixed            = false;
+    #idCountdownFixed = 0;
+    #timerToFixed     = 0;
 
     constructor(character,boardGame) {
         this.#character = character;
@@ -23,20 +26,25 @@ class Piece {
         return this.#character;
     }
 
-    getCoordinates = function() {
-        return this.#coordinates;
+    getUnderCollision = function() {
+        return this.#underCollision;
     }
 
     getFixed = function() {
         return this.#fixed;
     }
 
+    enableFixed = function() {
+        this.#disableCountDownFixed();
+        this.#fixed = true;
+    }
+
     move = function(row,col = 0) {
         let newCoordinates = JSON.parse( JSON.stringify(this.#coordinates) );
         if (this.#fixed) return;
         newCoordinates = this.#calculateCoordinatesAfterMove(newCoordinates,row,col);
-        this.#reDrawPiece(newCoordinates);
-        this.#fixed = this.#checkUnderCollision(this.#coordinates);
+        this.#reLocatePiece(newCoordinates);
+        this.#enableDisableFixedSystem();
     }
 
     rotate = function () {
@@ -45,11 +53,32 @@ class Piece {
         if (this.#coordinates.length == 2 && this.#coordinates[0].length == 2) return;
         newCoordinates = this.#calculateCoordinatesAfterRotation(newCoordinates, newCoordinates.length == 1 ? 
             this.#getCoordinatesRotation(4) : this.#getCoordinatesRotation(this.#currentRotation));
-        this.#reDrawPiece(newCoordinates);
+        this.#reLocatePiece(newCoordinates);
+        this.#enableDisableFixedSystem();
         this.#currentRotation = !this.#validateCoordinates(newCoordinates) ? this.#currentRotation : this.#currentRotation == 3 ? 0 : this.#currentRotation + 1;
     }
 
-    #reDrawPiece = function(newCoordinates) {
+    #enableDisableFixedSystem = function() {
+        this.#underCollision = this.#checkUnderCollision(this.#coordinates);
+        this.#underCollision && this.#idCountdownFixed == 0 ? (this.#idCountdownFixed = this.#enableCountDownFixed()) : 0;
+        !this.#underCollision ? this.#disableCountDownFixed() : 0;
+    }
+
+    #enableCountDownFixed = function() {
+        const piece = this;
+        return setInterval(
+            () => {
+                piece.#fixed = (piece.#timerToFixed += 100) == 1000;//500
+                piece.#fixed ? piece.#disableCountDownFixed(piece.#idCountdownFixed) : false;
+            }, 100);
+    }
+
+    #disableCountDownFixed = function() {
+        clearInterval(this.#idCountdownFixed);
+        this.#idCountdownFixed = 0;
+    }
+
+    #reLocatePiece = function(newCoordinates) {
         this.#cleanOrPrintPiece();
         this.#coordinates = this.#validateCoordinates(newCoordinates) ? newCoordinates : this.#coordinates;
         this.#cleanOrPrintPiece(true);
