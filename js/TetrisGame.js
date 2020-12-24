@@ -114,6 +114,11 @@ class TetrisGame {
         this.#idPlay = 0;
     }
 
+    #countPointsEarned = function(nFilas) {
+        const points = this.getLevel() == 0 ? 50 : 100 * this.getLevel();
+        return nFilas * points + (nFilas - 1) * points;
+    }
+
     #createBoardGame = function(numberRows,numberColumns) {
         let boardGame = [];
         for (let i = 0; i < numberRows; i++) {
@@ -148,6 +153,7 @@ class TetrisGame {
             this.#checkCleanRow(this.#boardGame[i]) ? rowToClean.push(i) : false;
         if (rowToClean.length == 0) return;
         this.#lines += rowToClean.length;
+        this.#score += this.#countPointsEarned(rowToClean.length);
         for (let currentRow = this.#boardGame.length - 1; currentRow > -1; currentRow--) {
             if (currentRow > rowToClean[0]) continue;
             do {
