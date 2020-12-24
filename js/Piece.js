@@ -15,6 +15,7 @@ class Piece {
     #fixed            = false;
     #idCountdownFixed = 0;
     #timerToFixed     = 1000;
+    #overFlow         = false;
 
     constructor(character,boardGame) {
         this.#character = character;
@@ -34,6 +35,10 @@ class Piece {
         return this.#fixed;
     }
 
+    getOverFlow = function() {
+        return this.#overFlow;
+    }
+
     enableFixed = function() {
         this.#disableCountDownFixed();
         this.#fixed = true;
@@ -45,6 +50,7 @@ class Piece {
         newCoordinates = this.#calculateCoordinatesAfterMove(newCoordinates,row,col);
         this.#reLocatePiece(newCoordinates);
         this.#enableDisableFixedSystem();
+        this.#overFlow = this.#checkOverFlow();
     }
 
     rotate = function () {
@@ -142,9 +148,18 @@ class Piece {
                 if (!coordinates[i][j].length) continue;
                 const row = coordinates[i][j][0];
                 const col = coordinates[i][j][1];
-                if (row < 0 || col < 0 || col > this.#boardGame[0].length - 1) continue;
+                if (row < -1 || col < 0 || col > this.#boardGame[0].length - 1) continue;
                 if (row == this.#boardGame.length - 1) return true;
                 if (this.#boardGame[row + 1][col] != ' ' && !this.#checkCoordinateIsPieceSelf([row + 1,col])) return true;
+            }
+        return false;
+    }
+
+    #checkOverFlow = function() {
+        for (let i = 0; i < this.#coordinates.length; i++) 
+            for (let j = 0; j < this.#coordinates[0].length; j++) {
+                if (!this.#coordinates[i][j].length) continue;
+                if (this.#coordinates[i][j][0] < 0) return true; //if row < 0
             }
         return false;
     }
