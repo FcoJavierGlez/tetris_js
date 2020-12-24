@@ -25,11 +25,13 @@
                 elementsDOM[i][j].classList = array[i][j] == ' ' ? 'square' : `square ${array[i][j]}`;
     }
 
-    const render = function(boardGameDOM,nextPieceDOM,score,game) {
+    const render = function(boardGameDOM,nextPieceDOM,level,lines,score,game) {
         setInterval(
             () => {
                 renderGrid(boardGameDOM,game.getBoardGame());
                 renderGrid(nextPieceDOM,game.getInfoPreviewNextPiece());
+                level.innerHTML = game.getLevel();
+                lines.innerHTML = game.getLines();
                 score.innerHTML = game.getScore();
             }, 50);
     }
@@ -37,6 +39,8 @@
     const init = () => {
         const board     = document.getElementById("board");
         const previewer = document.getElementById("next-piece");
+        const level     = document.getElementById("level");
+        const lines     = document.getElementById("lines");
         const score     = document.getElementById("score");
         const tetris    = new TetrisGame(20,10,localStorage.getItem('tetris_max_score') == null ? 0 : localStorage.getItem('tetris_max_score'));
         let [boardGame,fragment]             = createGrid(20,10,true);
@@ -45,7 +49,7 @@
         board.appendChild(fragment);
         previewer.appendChild(fragmentPreviewer);
 
-        render(boardGame,nextPieceDOM,score,tetris);
+        render(boardGame,nextPieceDOM,level,lines,score,tetris);
 
         document.addEventListener("keydown", e => {
             if (e.code == 'Space')
