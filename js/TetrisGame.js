@@ -21,8 +21,8 @@ class TetrisGame {
     constructor(numberOfRows = 20, numberOfColumns = 10,maxScore) {
         TetrisGame.#MAX_SCORE = maxScore;
         this.#boardGame       = this.#createBoardGame(numberOfRows,numberOfColumns);
-        this.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
-        this.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
+        this.#pieces.push( this.#generateNextPiece() );
+        this.#pieces.push( this.#generateNextPiece(true) );
     }
 
     getBoardGame = function() {
@@ -40,6 +40,10 @@ class TetrisGame {
 
     getScore = function() {
         return this.#score;
+    }
+
+    getEndGame = function() {
+        return this.#endGame;
     }
 
     getInfoPreviewNextPiece() {
@@ -77,7 +81,7 @@ class TetrisGame {
         else this.#score = this.#score + 1 > TetrisGame.#LIMIT_SCORE ? TetrisGame.#LIMIT_SCORE : ++this.#score;
     }
 
-    #generatePiece = function() {
+    #selectRandomPiece = function() {
         const LETTER = {
             '0': 'L',
             '1': 'J',
@@ -87,7 +91,17 @@ class TetrisGame {
             '5': 'O',
             '6': 'I'
         }
-        return LETTER[ parseInt( Math.random() * 7 ) ]; //need * 7, but I must create 'I' piece rotation before
+        return LETTER[ parseInt( Math.random() * 7 ) ];
+    }
+
+    #generateNextPiece = function(noRepeatPreviousPiece = false) {
+        let nextPiece = '';
+        if (!noRepeatPreviousPiece) return new Piece(this.#selectRandomPiece(),this.#boardGame);
+        if (this.#pieces.length == 0) return new Piece(this.#selectRandomPiece(),this.#boardGame);
+        do {
+            nextPiece = this.#selectRandomPiece();
+        } while (nextPiece == this.#pieces[0].getCharacter());
+        return new Piece(nextPiece,this.#boardGame);
     }
 
     #play = function() {
@@ -101,7 +115,7 @@ class TetrisGame {
                 }
                 else if (tetris.#pieces[0].getFixed()) {
                     tetris.#pieces.shift();
-                    tetris.#pieces.push( new Piece(this.#generatePiece(),this.#boardGame) );
+                    tetris.#pieces.push( this.#generateNextPiece(true) );
                     tetris.#cleanboardGame();
                 }
                 if (!tetris.#pieces[0].getUnderCollision())
