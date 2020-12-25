@@ -63,6 +63,7 @@
         previewer.appendChild(fragmentPreviewer);
         
         document.addEventListener("keydown", e => {
+            if (tetris.getEndGame()) return;
             if (e.code == 'Space') {
                 tetris.togglePause();
                 togglePause(boardGame,nextPieceDOM,level,lines,score,tetris);
