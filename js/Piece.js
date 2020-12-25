@@ -14,13 +14,14 @@ class Piece {
     #underCollision   = false;
     #fixed            = false;
     #idCountdownFixed = 0;
-    #timerToFixed     = 1000;
+    #timerToFixed     = 0;
     #overFlow         = false;
 
-    constructor(character,boardGame) {
-        this.#character = character;
-        this.#boardGame = boardGame;
-        this.#coordinates = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
+    constructor(character,boardGame,gameIntervalTime) {
+        this.#character    = character;
+        this.#boardGame    = boardGame;
+        this.#timerToFixed = 500 + gameIntervalTime;
+        this.#coordinates  = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
     }
 
     getCharacter = function() {
@@ -74,7 +75,7 @@ class Piece {
         const piece = this;
         return setInterval(
             () => {
-                piece.#fixed = (piece.#timerToFixed -= 100) == 0;//500
+                piece.#fixed = (piece.#timerToFixed -= 100) <= 0;//500
                 piece.#fixed ? piece.#disableCountDownFixed(piece.#idCountdownFixed) : false;
             }, 100);
     }

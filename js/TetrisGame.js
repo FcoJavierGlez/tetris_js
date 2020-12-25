@@ -3,7 +3,7 @@
  * 
  * TetrisGame Class:
  * 
- * 
+ * Math.LN2 * 54 * nivel
  */
 
 class TetrisGame {
@@ -81,6 +81,10 @@ class TetrisGame {
         else this.#score = this.#score + 1 > TetrisGame.#LIMIT_SCORE ? TetrisGame.#LIMIT_SCORE : ++this.#score;
     }
 
+    #getIntervalTime = function() {
+        return 600 - parseInt( Math.LN2 * 29 * this.getLevel() );
+    }
+
     #selectRandomPiece = function() {
         const LETTER = {
             '0': 'L',
@@ -96,12 +100,12 @@ class TetrisGame {
 
     #generateNextPiece = function(noRepeatPreviousPiece = false) {
         let nextPiece = '';
-        if (!noRepeatPreviousPiece) return new Piece(this.#selectRandomPiece(),this.#boardGame);
-        if (this.#pieces.length == 0) return new Piece(this.#selectRandomPiece(),this.#boardGame);
+        if (!noRepeatPreviousPiece) return new Piece(this.#selectRandomPiece(),this.#boardGame,this.#getIntervalTime());
+        if (this.#pieces.length == 0) return new Piece(this.#selectRandomPiece(),this.#boardGame,this.#getIntervalTime());
         do {
             nextPiece = this.#selectRandomPiece();
         } while (nextPiece == this.#pieces[0].getCharacter());
-        return new Piece(nextPiece,this.#boardGame);
+        return new Piece(nextPiece,this.#boardGame,this.#getIntervalTime());
     }
 
     #play = function() {
@@ -117,10 +121,12 @@ class TetrisGame {
                     tetris.#pieces.shift();
                     tetris.#pieces.push( this.#generateNextPiece(true) );
                     tetris.#cleanboardGame();
+                    tetris.#pause();
+                    tetris.#idPlay = tetris.#play();
                 }
                 if (!tetris.#pieces[0].getUnderCollision())
                     tetris.#pieces[0].move(1);
-            }, 500);
+            }, tetris.#getIntervalTime() ); //500
     }
 
     #pause = function() {
