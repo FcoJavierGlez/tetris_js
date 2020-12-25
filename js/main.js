@@ -22,18 +22,7 @@
     const renderGrid = (elementsDOM,array) => {
         for (let i = 0; i < elementsDOM.length; i++) 
             for (let j = 0; j < elementsDOM[0].length; j++) 
-                elementsDOM[i][j].classList = array[i][j] == ' ' ? 'square' : `square ${array[i][j]}`;
-    }
-
-    const render = function(boardGameDOM,nextPieceDOM,level,lines,score,game) {
-        setInterval(
-            () => {
-                renderGrid(boardGameDOM,game.getBoardGame());
-                renderGrid(nextPieceDOM,game.getInfoPreviewNextPiece());
-                level.innerHTML = game.getLevel();
-                lines.innerHTML = game.getLines();
-                score.innerHTML = game.getScore();
-            }, 50);
+                elementsDOM[i][j].classList = array[i][j] == ' ' ? 'square' : `${array[i][j]}`;
     }
 
     const init = () => {
@@ -47,9 +36,14 @@
         let [nextPieceDOM,fragmentPreviewer] = createGrid(2,4);
         let idPause = 0;
 
+        level.innerHTML = tetris.getLevel();
+        lines.innerHTML = tetris.getLines();
+        score.innerHTML = tetris.getScore();
+
         const playRender = (boardGameDOM,nextPieceDOM,level,lines,score,game) => {
             return setInterval(
                 () => {
+                    game.getEndGame() ? pauseRender() : false;
                     renderGrid(boardGameDOM,game.getBoardGame());
                     renderGrid(nextPieceDOM,game.getInfoPreviewNextPiece());
                     level.innerHTML = game.getLevel();
