@@ -3,7 +3,7 @@
  * 
  * TetrisGame Class:
  * 
- * Math.LN2 * 54 * nivel
+ * 
  */
 
 class TetrisGame {
@@ -12,7 +12,7 @@ class TetrisGame {
     static #LIMIT_LEVEL = 20;
 
     #lines              = 0;
-    #score              = 0;//999999
+    #score              = 0;
     #idPlay             = 0;
     #boardGame          = [];
     #pieces             = [];
@@ -87,7 +87,7 @@ class TetrisGame {
     }
 
     reset = function() {
-        this.#score, this.#lines, this.#idPlay = 0;
+        this.#score = this.#lines = this.#idPlay = 0;
         this.#endGame   = false;
         this.#pieces    = [];
         this.#boardGame = this.#createBoardGame(this.#boardGame.length,this.#boardGame[0].length);
@@ -130,7 +130,6 @@ class TetrisGame {
                 if (tetris.#pieces[0].getFixed() && tetris.#pieces[0].getOverFlow()) {
                     tetris.#endGame = true;
                     tetris.#finishGame();
-                    console.log(TetrisGame.getMaxScore());
                 }
                 else if (tetris.#pieces[0].getFixed()) {
                     tetris.#pieces.shift();
