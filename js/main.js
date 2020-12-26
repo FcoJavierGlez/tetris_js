@@ -31,7 +31,7 @@
         const level     = document.getElementById("level");
         const lines     = document.getElementById("lines");
         const score     = document.getElementById("score");
-        const tetris    = new TetrisGame(20,10,localStorage.getItem('tetris_max_score') == null ? 0 : localStorage.getItem('tetris_max_score'));
+        const tetris    = new TetrisGame(localStorage.getItem('tetris_max_score') == null ? 0 : localStorage.getItem('tetris_max_score'),20,10);
         let [boardGame,fragment]             = createGrid(20,10,true);
         let [nextPieceDOM,fragmentPreviewer] = createGrid(2,4);
         let idPause = 0;
