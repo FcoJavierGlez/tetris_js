@@ -22,7 +22,7 @@
     const renderGrid = (elementsDOM,array) => {
         for (let i = 0; i < elementsDOM.length; i++) 
             for (let j = 0; j < elementsDOM[0].length; j++) 
-                elementsDOM[i][j].classList = array[i][j] == ' ' ? 'square' : `${array[i][j]}`;
+                elementsDOM[i][j].classList = array.length == 0 || array[i][j] == ' ' ? 'square' : `${array[i][j]}`;
     }
 
     const setMaxScoreIntoLocalStorage = maxScore => {
@@ -111,9 +111,7 @@
         resetButton.addEventListener("click", () => {
             tetris.reset();
             renderGrid(boardGame,tetris.getBoardGame());
-            for (let i = 0; i < nextPieceDOM.length; i++) // reset render next piece
-                for (let j = 0; j < nextPieceDOM[0].length; j++) 
-                    nextPieceDOM[i][j].classList = 'square';
+            renderGrid(nextPieceDOM,[]);
             level.innerHTML = tetris.getLevel();
             lines.innerHTML = tetris.getLines();
             score.innerHTML = tetris.getScore();
