@@ -279,6 +279,8 @@ class Piece {
      * la siguiente rotación de 90 grados.
      * 
      * @param {Number} currentRotation Número de la rotación actual. Rangos válidos [0-3] || 4 si la pieza es del tipo 'I'
+     * 
+     * @return {Array}                 Las coordenadas a aplicar para la siguiente rotación.
      */
     #getCoordinatesRotation = function(currentRotation) {
         const rotation = {
