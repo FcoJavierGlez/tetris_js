@@ -104,7 +104,7 @@ class TetrisGame {
         if (this.#pieces.length == 0) return new Piece(this.#selectRandomPiece(),this.#boardGame,this.#getIntervalTime());
         do {
             nextPiece = this.#selectRandomPiece();
-        } while (nextPiece == this.#pieces[0].getCharacter());
+        } while (this.#pieces.filter( e => e.getCharacter() == nextPiece ).length != 0);
         return new Piece(nextPiece,this.#boardGame,this.#getIntervalTime());
     }
 
