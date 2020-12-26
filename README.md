@@ -23,8 +23,8 @@ Puedes acceder a través del siguiente enlace: **[Juego del Tetris](https://fcoj
 ### Controles:
 
 - **Espacio:** Pausa / reanuda el juego.
-- **Cursore arriba:** Rota la pieza 90 gradas en sentido de las agujas del reloj.
-- **Cursore abajo:** Baja la pieza más rápido y obten puntos extra al hacerlo.
+- **Cursor arriba:** Rota la pieza 90 gradas en sentido de las agujas del reloj.
+- **Cursor abajo:** Baja la pieza más rápido y obten puntos extra al hacerlo.
 - **Cursores laterales:** Desplaza la pieza hacia los lados.
 
 ### ¿Cómo se juega?:
