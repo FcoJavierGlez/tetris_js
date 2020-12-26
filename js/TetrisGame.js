@@ -18,7 +18,7 @@ class TetrisGame {
     #pieces             = [];
     #endGame            = false;
 
-    constructor(numberOfRows = 20, numberOfColumns = 10,maxScore) {
+    constructor(maxScore, numberOfRows = 20, numberOfColumns = 10) {
         TetrisGame.#MAX_SCORE = maxScore;
         this.#boardGame       = this.#createBoardGame(numberOfRows,numberOfColumns);
         this.#pieces.push( this.#generateNextPiece() );
@@ -86,6 +86,16 @@ class TetrisGame {
         else this.#score = this.#score + 1 > TetrisGame.#LIMIT_SCORE ? TetrisGame.#LIMIT_SCORE : ++this.#score;
     }
 
+    reset = function() {
+        this.#score, this.#lines, this.#idPlay = 0;
+        this.#endGame   = false;
+        this.#pieces    = [];
+        this.#boardGame = this.#createBoardGame(this.#boardGame.length,this.#boardGame[0].length);
+        this.#pieces.push( this.#generateNextPiece() );
+        this.#pieces.push( this.#generateNextPiece(true) );
+        this.#pieces.push( this.#generateNextPiece(true) );
+    }
+
     #getIntervalTime = function() {
         return 600 - parseInt( Math.LN2 * 29 * this.getLevel() );
     }
@@ -119,8 +129,8 @@ class TetrisGame {
             () => {
                 if (tetris.#pieces[0].getFixed() && tetris.#pieces[0].getOverFlow()) {
                     tetris.#endGame = true;
-                    tetris.#pause();
-                    tetris.#MAX_SCORE = tetris.#score > tetris.#MAX_SCORE ? tetris.#score : tetris.#MAX_SCORE;
+                    tetris.#finishGame();
+                    console.log(TetrisGame.getMaxScore());
                 }
                 else if (tetris.#pieces[0].getFixed()) {
                     tetris.#pieces.shift();
@@ -131,12 +141,17 @@ class TetrisGame {
                 }
                 if (!tetris.#pieces[0].getUnderCollision())
                     tetris.#pieces[0].move(1);
-            }, tetris.#getIntervalTime() ); //500
+            }, tetris.#getIntervalTime() );
     }
 
     #pause = function() {
         clearInterval(this.#idPlay);
         this.#idPlay = 0;
+    }
+
+    #finishGame = function() {
+        TetrisGame.#MAX_SCORE = this.#score > TetrisGame.#MAX_SCORE ? this.#score : TetrisGame.#MAX_SCORE;
+        this.#pause();
     }
 
     #countPointsEarned = function(nRows) {
