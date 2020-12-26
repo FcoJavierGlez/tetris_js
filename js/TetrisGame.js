@@ -23,6 +23,7 @@ class TetrisGame {
         this.#boardGame       = this.#createBoardGame(numberOfRows,numberOfColumns);
         this.#pieces.push( this.#generateNextPiece() );
         this.#pieces.push( this.#generateNextPiece(true) );
+        this.#pieces.push( this.#generateNextPiece(true) );
     }
 
     getBoardGame = function() {
