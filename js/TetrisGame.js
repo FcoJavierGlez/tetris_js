@@ -26,6 +26,10 @@ class TetrisGame {
         this.#pieces.push( this.#generateNextPiece(true) );
     }
 
+    static getMaxScore = function() {
+        return TetrisGame.#MAX_SCORE;
+    }
+
     getBoardGame = function() {
         return this.#boardGame;
     }
@@ -116,7 +120,7 @@ class TetrisGame {
                 if (tetris.#pieces[0].getFixed() && tetris.#pieces[0].getOverFlow()) {
                     tetris.#endGame = true;
                     tetris.#pause();
-                    console.log('Has perdido');
+                    tetris.#MAX_SCORE = tetris.#score > tetris.#MAX_SCORE ? tetris.#score : tetris.#MAX_SCORE;
                 }
                 else if (tetris.#pieces[0].getFixed()) {
                     tetris.#pieces.shift();
