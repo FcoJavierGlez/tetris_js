@@ -343,7 +343,7 @@ class TetrisGame {
             this.#checkCleanRow(this.#boardGame[i]) ? rowToClean.push(i) : false;
         if (rowToClean.length == 0) return;
         this.#lines += rowToClean.length;
-        this.#score = (this.#score += this.#countPointsEarned(rowToClean.length)) > TetrisGame.#MAX_SCORE ? TetrisGame.#MAX_SCORE : this.#score;
+        this.#score = (this.#score += this.#countPointsEarned(rowToClean.length)) > TetrisGame.#LIMIT_SCORE ? TetrisGame.#LIMIT_SCORE : this.#score;
         for (let currentRow = this.#boardGame.length - 1; currentRow > -1; currentRow--) {
             if (currentRow > rowToClean[0]) continue;
             do {
