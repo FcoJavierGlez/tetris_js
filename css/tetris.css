@@ -128,7 +128,7 @@ main {
     border-radius: 15px;
     margin: 15px auto;
     padding: 15px;
-    background-color: rgb(255,255,255,0.75);
+    background-color: rgb(255,255,255,0.85);
 }
 #message h3 {
     font-size: 0.75rem;
@@ -260,7 +260,7 @@ main {
         grid-template-columns: repeat(4,var(--width_square_min_1000));
     }
     #score {
-        font-size: 50px;
+        font-size: 45px;
     }
 }
 @media only screen and (min-width: 1000px) and (min-height: 900px) {
@@ -280,6 +280,6 @@ main {
     #level, #score, #lines, #next-piece {
         width: 150px;
         height: 90px;
-        font-size: 60px;
+        font-size: 50px;
     }
 }
