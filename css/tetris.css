@@ -166,7 +166,7 @@ main {
     margin: 0 auto;
     padding: 5px;
     width: 120px;
-    height: 60px;
+    height: 55px;
     display: grid;
     align-items: center;
     color: red;
@@ -191,22 +191,25 @@ main {
 
 #panel {
     height: 100%;
-    margin-top: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .instructions {
     height: 45vh;
 }
-
+@media only screen and (min-height: 650px) {
+    #level, #score, #lines, #next-piece {
+        height: 60px;
+    }
+}
 @media only screen and (min-width: 700px) {
     .instructions {
         height: 58vh;
     }
     .pause, .game-over {
         font-size: 60px;
-    }
-    #panel {
-        margin-top: 5vh;
     }
     #message h3 {
         font-size: 1rem;
@@ -241,9 +244,6 @@ main {
     }
     .pause, .game-over {
         font-size: 80px;
-    }
-    #panel {
-        margin-top: 0;
     }
     #message h3 {
         font-size: 1.25rem;
