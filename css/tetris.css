@@ -19,8 +19,9 @@ main {
 }
 .pauseScreen {
     background-color: rgba(50, 50, 50, 0.4);
-    height: 100vh;
+    height: 76vh;
     width: 100%;
+    margin: 12vh 0;
     z-index: 3;
     position: absolute;
     display: flex;
