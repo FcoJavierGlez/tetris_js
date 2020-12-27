@@ -1,4 +1,6 @@
 :root {
+    --width_square_min_400: 20px;
+    --width_square3D_min_400: 12px;
     --width_square_min_550: 25px;
     --width_square3D_min_550: 17px;
     --width_square_min_1000: 30px;
@@ -43,7 +45,7 @@ h1 {
 }
 #board {
     display: grid;
-    grid-template-columns: repeat(10,var(--width_square_min_550));
+    grid-template-columns: repeat(10,var(--width_square_min_400));
     column-gap: 2px;
     row-gap: 2px;
     justify-content: center;
@@ -53,15 +55,15 @@ h1 {
     border: 2px solid black;
 }
 .square {
-    height: var(--width_square_min_550);
-    width: var(--width_square_min_550);
+    height: var(--width_square_min_400);
+    width: var(--width_square_min_400);
 }
 .empty {
     background-color: rgb(200, 200, 200);
 }
 .L, .J, .O, .Z, .S, .I, .T {
-    height: var(--width_square3D_min_550);
-    width: var(--width_square3D_min_550);
+    height: var(--width_square3D_min_400);
+    width: var(--width_square3D_min_400);
 }
 .L {
     border-top: 4px solid rgb(255,194,81);
@@ -174,8 +176,7 @@ h1 {
 
 #next-piece {
     background-color: white;
-    *display: grid;
-    grid-template-columns: repeat(4,var(--width_square_min_550));
+    grid-template-columns: repeat(4,var(--width_square_min_400));
     align-content: center;
     justify-content: center;
     justify-items: center;
@@ -210,6 +211,22 @@ h1 {
         font-size: 0.85rem;
     }
 }
+@media only screen and (min-width: 700px) and (min-height: 760px) {
+    #board {
+        grid-template-columns: repeat(10,var(--width_square_min_550));
+    }
+    .square {
+        height: var(--width_square_min_550);
+        width: var(--width_square_min_550);
+    }
+    .L, .J, .O, .Z, .S, .I, .T {
+        height: var(--width_square3D_min_550);
+        width: var(--width_square3D_min_550);
+    }
+    #next-piece {
+        grid-template-columns: repeat(4,var(--width_square_min_550));
+    }
+}
 @media only screen and (min-width: 900px) {
     .instructions {
         height: 70vh;
@@ -229,17 +246,6 @@ h1 {
     }
 }
 @media only screen and (min-width: 1000px) {
-    #board {
-        grid-template-columns: repeat(10,var(--width_square_min_1000));
-    }
-    .square {
-        height: var(--width_square_min_1000);
-        width: var(--width_square_min_1000);
-    }
-    .L, .J, .O, .Z, .S, .I, .T {
-        height: var(--width_square3D_min_1000);
-        width: var(--width_square3D_min_1000);
-    }
     #level, #score, #lines, #next-piece {
         width: 125px;
         height: 70px;
@@ -250,6 +256,19 @@ h1 {
     }
     #score {
         font-size: 50px;
+    }
+}
+@media only screen and (min-width: 1000px) and (min-height: 900px) {
+    #board {
+        grid-template-columns: repeat(10,var(--width_square_min_1000));
+    }
+    .square {
+        height: var(--width_square_min_1000);
+        width: var(--width_square_min_1000);
+    }
+    .L, .J, .O, .Z, .S, .I, .T {
+        height: var(--width_square3D_min_1000);
+        width: var(--width_square3D_min_1000);
     }
 }
 @media only screen and (min-width: 1300px) {
