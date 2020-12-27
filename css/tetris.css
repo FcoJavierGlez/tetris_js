@@ -34,10 +34,14 @@ main {
     font-weight: bold;
 }
 
-h1 {
-    font-family: 'Digital-clock';
-    font-size: 5rem;
+.logo {
+    background-image: url(../img/logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: 75%;
 }
+
 .panel-board {
     display: flex;
     justify-content: center;
