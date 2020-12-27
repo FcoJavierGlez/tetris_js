@@ -31,7 +31,7 @@ main {
 }
 .pause, .game-over {
     font-family: 'Arcade';
-    font-size: 80px;
+    font-size: 45px;
     font-weight: bold;
 }
 
@@ -202,6 +202,9 @@ main {
     .instructions {
         height: 58vh;
     }
+    .pause, .game-over {
+        font-size: 60px;
+    }
     #panel {
         margin-top: 5vh;
     }
@@ -235,6 +238,9 @@ main {
 @media only screen and (min-width: 900px) {
     .instructions {
         height: 70vh;
+    }
+    .pause, .game-over {
+        font-size: 80px;
     }
     #panel {
         margin-top: 0;
