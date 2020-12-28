@@ -204,6 +204,10 @@ main {
     text-align: center;
 }
 
+#difficulty {
+    font-size: 20px;
+}
+
 #score {
     text-align: right;
 }
@@ -294,7 +298,13 @@ main {
     #level, #score, #lines, #next-piece {
         width: 125px;
         height: 70px;
-        font-size: 60px;
+        font-size: 46px;
+    }
+    #level {
+        font-size: 42px;
+    }
+    #difficulty {
+        font-size: 25px;
     }
     #score {
         font-size: 45px;
@@ -326,5 +336,8 @@ main {
         width: 150px;
         height: 90px;
         font-size: 50px;
+    }
+    #difficulty {
+        font-size: 30px;
     }
 }
