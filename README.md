@@ -47,7 +47,7 @@ Puedes acceder a través del siguiente enlace: **[Juego del Tetris](https://fcoj
 ![captura5](img_readme/captura5.png)  *Eliminar más de una línea a la vez, siendo el Tetris el máximo, da muchos puntos.*
 
 <p style="text-aling: justify;">
-    Por cada 10 líneas que eliminas incrementas un nivel. A más nivel más puntos recibes, pero cuidado, porque igualmente irá incrementando la velocidad de juego. El nivel máximo alcanzable es el 20, para lo que tendrás que haber eliminado 200 líneas.
+    Por cada 10 líneas que eliminas incrementas un nivel. A más nivel más puntos recibes, pero cuidado, porque igualmente irá incrementando la velocidad de juego. El nivel máximo alcanzable es el 10, para lo que tendrás que haber eliminado 100 líneas.
 </p>
 
 ![captura6](img_readme/captura6.png)  *Incremento de nivel por cada 10 líneas eliminadas.*
