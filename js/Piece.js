@@ -90,19 +90,24 @@ class Piece {
      *                   1 la pieza se desplaza a la derecha.
      *                   0 la pieza no se desplaza en horizontal.
      */
-    move = function(row,col = 0) {
+    move = function(row,col = 0,showShadow = false) {
         let newCoordinates = JSON.parse( JSON.stringify(this.#coordinates) );
         if (this.#fixed) return;
         newCoordinates = this.#calculateCoordinatesAfterMove(newCoordinates,row,col);
         this.#reLocatePiece(newCoordinates);
         this.#enableDisableFixedSystem();
         this.#overFlow = this.#checkOverFlow();
+        let coordinatesShadow = [];
+        coordinatesShadow = this.#calculateCoordinatesShadow(this.#coordinates);
+        console.log(coordinatesShadow);
+        /* if (showShadow)
+            this.#showShadowPiece(); */
     }
 
     /**
      * Rota la pieza 90 grados en sentido horario siempre y cuando la rotación sea posible.
      */
-    rotate = function () {
+    rotate = function (showShadow = false) {
         let newCoordinates = JSON.parse( JSON.stringify(this.#coordinates) );
         if (this.#fixed) return;
         if (this.#coordinates.length == 2 && this.#coordinates[0].length == 2) return;
@@ -111,6 +116,34 @@ class Piece {
         this.#reLocatePiece(newCoordinates);
         this.#enableDisableFixedSystem();
         this.#currentRotation = !this.#validateCoordinates(newCoordinates) ? this.#currentRotation : this.#currentRotation == 3 ? 0 : this.#currentRotation + 1;
+        /* if (showShadow)
+            this.#showShadowPiece(); */
+    }
+
+    /**
+     * Muestra la sombra de la pieza, es decir, muestra la ubicación final
+     * de la pieza activa si sigue descendiendo en la columna actual.
+     */
+    #showShadowPiece = function() {
+        let coordinatesShadow = [];
+        coordinatesShadow = this.#calculateCoordinatesShadow(this.#coordinates);
+
+    }
+
+    /**
+     * Calcula las coordenadas de la sombra de la pieza, es decir, la ubicación final 
+     * que obtendrá la pieza activa si sigue desciendiendo en la columna actual.
+     * 
+     * @param {Array} coordinates Las coordenadas actuales de las que parte el cálculo
+     * 
+     * @return 
+     */
+    #calculateCoordinatesShadow = function(coordinates) {
+        let newCoordinates = JSON.parse( JSON.stringify(coordinates) );
+        newCoordinates = this.#calculateCoordinatesAfterMove(newCoordinates,1,0);
+        if (!this.#validateCoordinates(newCoordinates))
+            return coordinates;
+        return this.#calculateCoordinatesShadow(newCoordinates);
     }
 
     /**
