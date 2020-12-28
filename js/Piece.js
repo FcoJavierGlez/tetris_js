@@ -16,24 +16,27 @@ class Piece {
     #coordinates        = [];
     #shadowCoordinates  = [];
     #boardGame          = [];
-    #underCollision     = false;
-    #fixed              = false;
     #idCountdownFixed   = 0;
     #timerToFixed       = 0;
+    #underCollision     = false;
+    #fixed              = false;
     #overFlow           = false;
+    #shadowPiece        = false;
 
     /**
      * Constructor. Recibe como parámetro el tipo de pieza a construir (en forma de caracter),
      * el tablero del juego y el intervalo de tiempo del juego en su estado actual al crearse
-     * la pieza.
+     * la pieza y si ésta proyecta sombra.
      * 
-     * @param {String} character 
-     * @param {Array} boardGame 
-     * @param {Number} gameIntervalTime 
+     * @param {String} character        El caracter con el que se identifica la pieza.
+     * @param {Array} boardGame         El tablero de juego.
+     * @param {Number} gameIntervalTime El intervalo de tiempo del juego.
+     * @param {Boolean} shadowPiece     Si se desea que la pieza proyecte sombra.
      */
-    constructor(character,boardGame,gameIntervalTime) {
+    constructor(character,boardGame,gameIntervalTime,shadowPiece) {
         this.#character         = character;
         this.#boardGame         = boardGame;
+        this.#shadowPiece       = shadowPiece;
         this.#timerToFixed      = 500 + gameIntervalTime;
         this.#coordinates       = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
         this.#shadowCoordinates = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
@@ -92,24 +95,20 @@ class Piece {
      *                   1 la pieza se desplaza a la derecha.
      *                   0 la pieza no se desplaza en horizontal.
      */
-    move = function(row,col = 0,showShadow = false) {
+    move = function(row,col = 0) {
         let newCoordinates = JSON.parse( JSON.stringify(this.#coordinates) );
         if (this.#fixed) return;
         newCoordinates = this.#calculateCoordinatesAfterMove(newCoordinates,row,col);
         this.#reLocatePiece(newCoordinates);
         this.#enableDisableFixedSystem();
         this.#overFlow = this.#checkOverFlow();
-        let coordinatesShadow = [];
-        coordinatesShadow = this.#calculateCoordinatesShadow(this.#coordinates);
-        console.log(coordinatesShadow);
-        /* if (showShadow)
-            this.#showShadowPiece(); */
+        this.#shadowPiece ? this.#showShadowPiece() : false;
     }
 
     /**
      * Rota la pieza 90 grados en sentido horario siempre y cuando la rotación sea posible.
      */
-    rotate = function (showShadow = false) {
+    rotate = function () {
         let newCoordinates = JSON.parse( JSON.stringify(this.#coordinates) );
         if (this.#fixed) return;
         if (this.#coordinates.length == 2 && this.#coordinates[0].length == 2) return;
@@ -118,8 +117,8 @@ class Piece {
         this.#reLocatePiece(newCoordinates);
         this.#enableDisableFixedSystem();
         this.#currentRotation = !this.#validateCoordinates(newCoordinates) ? this.#currentRotation : this.#currentRotation == 3 ? 0 : this.#currentRotation + 1;
-        /* if (showShadow)
-            this.#showShadowPiece(); */
+        this.#shadowPiece ? this.#showShadowPiece() : false;
+
     }
 
     /**
@@ -127,9 +126,8 @@ class Piece {
      * de la pieza activa si sigue descendiendo en la columna actual.
      */
     #showShadowPiece = function() {
-        let coordinatesShadow = [];
-        coordinatesShadow = this.#calculateCoordinatesShadow(this.#shadowCoordinates);
-        this.#reLocatePiece(coordinatesShadow,true);
+        let coordinatesShadow = JSON.parse( JSON.stringify(this.#coordinates) );
+        this.#reLocatePiece(this.#calculateCoordinatesShadow(coordinatesShadow),true);
     }
 
     /**
@@ -138,7 +136,8 @@ class Piece {
      * 
      * @param {Array} coordinates Las coordenadas actuales de las que parte el cálculo
      * 
-     * @return 
+     * @return {Array}            Las coordenadas máximas que puede alcanzar la pieza actual,
+     *                            es decir, donde se ubicará la sombra de la pieza.
      */
     #calculateCoordinatesShadow = function(coordinates) {
         let newCoordinates = JSON.parse( JSON.stringify(coordinates) );
@@ -180,12 +179,19 @@ class Piece {
     }
 
     /**
-     * Reubica a la pieza en las nuevas coordenadas.
+     * Reubica a la pieza, o a la sombra, en las nuevas coordenadas.
      * 
-     * @param {Array} newCoordinates Array bidimensional compuesto por arrays con las coordendas de la pieza [row,col]
+     * Como primer parámetro recibe las coordenadas de la pieza, o sombra, que se van a recolocar.
+     * 
+     * Para que afecte a la sombra debemos pasarle como segundo parámetro un booleano en true.
+     * De lo contrario afectará únicamente a la pieza.
+     * 
+     * @param {Array} newCoordinates Array bidimensional compuesto por arrays con las coordendas de la pieza o la sombra [row,col]
+     * @param {Boolean} shadowPiece  [Opcional] Booleano que indica a qué aplica los cambios si a la pieza o a la sombra.
+     *                               Por defecto se inicia en flase, es decir, afectaría por defecto a la pieza.
      */
     #reLocatePiece = function(newCoordinates,shadowPiece = false) {
-        this.#cleanOrPrintPiece(shadowPiece ? this.#shadowCoordinates : this.#coordinates);
+        this.#cleanOrPrintPiece(shadowPiece ? this.#shadowCoordinates : this.#coordinates,false,shadowPiece);
         shadowPiece ?
             (this.#shadowCoordinates = this.#validateCoordinates(newCoordinates) ? newCoordinates : this.#shadowCoordinates) :
             (this.#coordinates = this.#validateCoordinates(newCoordinates) ? newCoordinates : this.#coordinates);
@@ -255,7 +261,7 @@ class Piece {
     }
 
     /**
-     * Vallida que las nuevas coordenadas, tras un desplazamiento o rotación, son válidas y no se superponen a otra
+     * Valida que las nuevas coordenadas, tras un desplazamiento o rotación, son válidas y no se superponen a otra
      * pieza o se sale del tablero.
      * 
      * @param {Array} newCoordinates Array bidimensional compuesto por arrays con las coordendas a comprobar [row,col]
@@ -271,13 +277,14 @@ class Piece {
                 if (col < 0 || col > this.#boardGame[0].length - 1) return false;
                 if (row < 0) continue;
                 if (row > this.#boardGame.length - 1) return false;
+                if (this.#boardGame[row][col] == `s${this.#character}`) continue;
                 if (this.#boardGame[row][col] != ' ' && !this.#checkCoordinateIsPieceSelf([row,col])) return false;
             }
         return true;
     }
 
     /**
-     * Comprueba si bajo las coordenadas pasasdas como parametro hay colisión 
+     * Comprueba si bajo las coordenadas pasadas como parámetro hay colisión 
      * con otra pieza o con el final del tablero.
      * 
      * @param {Array} coordinates Array bidimensional compuesto por arrays con las coordendas a comprobar [row,col]
@@ -292,7 +299,7 @@ class Piece {
                 const col = coordinates[i][j][1];
                 if (row < -1 || col < 0 || col > this.#boardGame[0].length - 1) continue;
                 if (row == this.#boardGame.length - 1) return true;
-                if (this.#boardGame[row + 1][col] != ' ' && !this.#checkCoordinateIsPieceSelf([row + 1,col])) return true;
+                if (!(this.#boardGame[row + 1][col] == `s${this.#character}` || this.#boardGame[row + 1][col] == ' ') && !this.#checkCoordinateIsPieceSelf([row + 1,col])) return true;
             }
         return false;
     }
@@ -345,22 +352,29 @@ class Piece {
     }
 
     /**
-     * Borra la pieza del tablero en las coordenadas actuales o 
-     * la coloca en función del booleano pasado por parámetro.
+     * Borra la pieza del tablero en las coordenadas actuales (pasadas como primer parámtetro) o 
+     * la coloca en función del booleano pasado como segundo parámetro.
      * 
-     * @param {Boolean} print Si es false (por defecto) elimina la pieza del tablero,
-     *                          si es true la vuelve a colocar.
+     * Existe un tercer parámetro opcional, que por defecto se inicia en falso, que en caso de pasarle
+     * un true afectará al borrado y recolocado de la sombra de la pieza.
+     * 
+     * @param {Array} coordinates Las coordendas de la pieza, o sombra de la misma, para recolocar la pieza.
+     * @param {Boolean} print     [Opcional] Si es false (por defecto) elimina la pieza del tablero,
+     *                            si es true la vuelve a colocar.
+     * @param {Boolean} shadow    [Opcional] Si es false (por defecto) elimina la pieza del tablero,
+     *                            si es true la vuelve a colocar.
      */
-    #cleanOrPrintPiece = function(coordinates,print = false,printShadow = false) {
+    #cleanOrPrintPiece = function(coordinates,print = false,shadow = false) {
         for (let i = 0; i < coordinates.length; i++) 
             for (let j = 0; j < coordinates[0].length; j++) {
                 if (!coordinates[i][j].length) continue;
                 const row = coordinates[i][j][0];
                 const col = coordinates[i][j][1];
                 if (row < 0 || row > this.#boardGame.length || col < 0 || col > this.#boardGame[0].length) continue;
-                this.#boardGame[row][col] = print ? 
-                                            printShadow ? `s${this.#character}` : this.#character 
-                                            : ' ';
+                if (print)
+                    this.#boardGame[row][col] = shadow && this.#boardGame[row][col] != this.#character ? `s${this.#character}` : this.#character;
+                else
+                    this.#boardGame[row][col] = shadow && this.#boardGame[row][col] == this.#character ? this.#character : ' ';
             }
     }
 
