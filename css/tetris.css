@@ -1,9 +1,12 @@
 :root {
     --width_square_min_400: 20px;
+    --width_square_shadow_min_400: 16px;
     --width_square3D_min_400: 12px;
     --width_square_min_550: 25px;
+    --width_square_shadow_min_550: 21px;
     --width_square3D_min_550: 17px;
     --width_square_min_1000: 30px;
+    --width_square_shadow_min_1000: 26px;
     --width_square3D_min_1000: 22px;
 }
 @font-face {
@@ -70,6 +73,11 @@ main {
     height: var(--width_square3D_min_400);
     width: var(--width_square3D_min_400);
 }
+.sL, .sJ, .sO, .sZ, .sS, .sI, .sT {
+    height: var(--width_square_shadow_min_400);
+    width: var(--width_square_shadow_min_400);
+    border-radius: 5px;
+}
 .L {
     border-top: 4px solid rgb(255,194,81);
     border-left: 4px solid rgb(255,184,51);
@@ -118,6 +126,27 @@ main {
     border-bottom: 4px solid rgb(146,26,255);
     border-right: 4px solid rgb(128,0,242);
     background-color: rgb(156, 51, 255);
+}
+.sL {
+    border: 2px solid orange;
+}
+.sJ {
+    border: 2px solid  rgb(50, 98, 255);
+}
+.sO {
+    border: 2px solid gold;
+}
+.sZ {
+    border: 2px solid red;
+}
+.sS {
+    border: 2px solid rgb(45, 220, 0);
+}
+.sI {
+    border: 2px solid lightskyblue;
+}
+.sT {
+    border: 2px solid rgb(156, 51, 255);
 }
 
 .hidden {
@@ -237,6 +266,11 @@ main {
     #next-piece {
         grid-template-columns: repeat(4,var(--width_square_min_550));
     }
+    .sL, .sJ, .sO, .sZ, .sS, .sI, .sT {
+        height: var(--width_square_shadow_min_550);
+        width: var(--width_square_shadow_min_550);
+        border-radius: 5px;
+    }
 }
 @media only screen and (min-width: 900px) {
     .instructions {
@@ -262,9 +296,6 @@ main {
         height: 70px;
         font-size: 60px;
     }
-    #next-piece {
-        grid-template-columns: repeat(4,var(--width_square_min_1000));
-    }
     #score {
         font-size: 45px;
     }
@@ -273,6 +304,9 @@ main {
     #board {
         grid-template-columns: repeat(10,var(--width_square_min_1000));
     }
+    #next-piece {
+        grid-template-columns: repeat(4,var(--width_square_min_1000));
+    }
     .square {
         height: var(--width_square_min_1000);
         width: var(--width_square_min_1000);
@@ -280,6 +314,11 @@ main {
     .L, .J, .O, .Z, .S, .I, .T {
         height: var(--width_square3D_min_1000);
         width: var(--width_square3D_min_1000);
+    }
+    .sL, .sJ, .sO, .sZ, .sS, .sI, .sT {
+        height: var(--width_square_shadow_min_1000);
+        width: var(--width_square_shadow_min_1000);
+        border-radius: 5px;
     }
 }
 @media only screen and (min-width: 1300px) {
