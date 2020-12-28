@@ -27,7 +27,8 @@ class TetrisGame {
 
     /**
      * Constructor. Recibe como parámetros la puntuación máxima almacenada de partidas anteriores (cookie),
-     * el número de filas y el número de columnas que componen el tablero de juego.
+     * el número de filas y el número de columnas que componen el tablero de juego y si se desea que no se repitan
+     * las piezas y que éstas además proyecten sombra.
      * 
      * @param {Number} maxScore               La puntuación máxima almacenada en una cookie.
      * @param {Number} numberOfRows           [Opcional] El número de filas que componen el tablero.
