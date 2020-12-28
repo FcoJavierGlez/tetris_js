@@ -19,6 +19,7 @@ class TetrisGame {
     #lines                 = 0;
     #score                 = 0;
     #idPlay                = 0;
+    #difficulty            = 0;
     #boardGame             = [];
     #pieces                = [];
     #endGame               = false;
@@ -27,20 +28,22 @@ class TetrisGame {
 
     /**
      * Constructor. Recibe como parámetros la puntuación máxima almacenada de partidas anteriores (cookie),
-     * el número de filas y el número de columnas que componen el tablero de juego y si se desea que no se repitan
-     * las piezas y que éstas además proyecten sombra.
+     * el número de filas y el número de columnas que componen el tablero de juego, la dificultad y si se
+     * desea que no se repitan las piezas y que éstas además proyecten sombra.
      * 
      * @param {Number} maxScore               La puntuación máxima almacenada en una cookie.
      * @param {Number} numberOfRows           [Opcional] El número de filas que componen el tablero.
      * @param {Number} numberOfColumns        [Opcional] El número de columnas que componen el tablero.
      * @param {Boolean} noRepeatPreviousPiece [Opcional] Si se desea que no se repitan las piezas con las dos anteriores.
      * @param {Boolean} showShadowPieces      [Opcional] Si se desea que se dibuje la sombra de la pieza.
+     * @param {Number} difficulty             [Opcional] El nivel de dificultad que tendrá el juego, por defecto 1 (normal).
      */
-    constructor(maxScore, numberOfRows = 20, numberOfColumns = 10, noRepeatPreviousPiece = true, showShadowPieces = true) {
+    constructor(maxScore, numberOfRows = 20, numberOfColumns = 10, noRepeatPreviousPiece = true, showShadowPieces = true, difficulty = 1) {
         TetrisGame.#MAX_SCORE       = maxScore;
         this.#boardGame             = this.#createBoardGame(numberOfRows,numberOfColumns);
         this.#noRepeatPreviousPiece = noRepeatPreviousPiece;
         this.#showShadowPieces      = showShadowPieces;
+        this.#difficulty            = difficulty;
         for (let i = 0; i < 3; i++) 
             this.#pieces.push( this.#generateNextPiece() );
     }
