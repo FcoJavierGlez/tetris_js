@@ -16,27 +16,32 @@ class TetrisGame {
     static #LIMIT_SCORE = 999999;
     static #LIMIT_LEVEL = 20;
 
-    #lines              = 0;
-    #score              = 0;
-    #idPlay             = 0;
-    #boardGame          = [];
-    #pieces             = [];
-    #endGame            = false;
+    #lines                 = 0;
+    #score                 = 0;
+    #idPlay                = 0;
+    #boardGame             = [];
+    #pieces                = [];
+    #endGame               = false;
+    #noRepeatPreviousPiece = false;
+    #showShadowPieces      = false;
 
     /**
      * Constructor. Recibe como parámetros la puntuación máxima almacenada de partidas anteriores (cookie),
      * el número de filas y el número de columnas que componen el tablero de juego.
      * 
-     * @param {Number} maxScore         La puntuación máxima almacenada en una cookie.
-     * @param {Number} numberOfRows     El número de filas que componen el tablero.
-     * @param {Number} numberOfColumns  El número de columnas que componen el tablero.
+     * @param {Number} maxScore               La puntuación máxima almacenada en una cookie.
+     * @param {Number} numberOfRows           [Opcional] El número de filas que componen el tablero.
+     * @param {Number} numberOfColumns        [Opcional] El número de columnas que componen el tablero.
+     * @param {Boolean} noRepeatPreviousPiece [Opcional] Si se desea que no se repitan las piezas con las dos anteriores.
+     * @param {Boolean} showShadowPieces      [Opcional] Si se desea que se dibuje la sombra de la pieza.
      */
-    constructor(maxScore, numberOfRows = 20, numberOfColumns = 10) {
-        TetrisGame.#MAX_SCORE = maxScore;
-        this.#boardGame       = this.#createBoardGame(numberOfRows,numberOfColumns);
-        this.#pieces.push( this.#generateNextPiece() );
-        this.#pieces.push( this.#generateNextPiece(true) );
-        this.#pieces.push( this.#generateNextPiece(true) );
+    constructor(maxScore, numberOfRows = 20, numberOfColumns = 10, noRepeatPreviousPiece = true, showShadowPieces = true) {
+        TetrisGame.#MAX_SCORE       = maxScore;
+        this.#boardGame             = this.#createBoardGame(numberOfRows,numberOfColumns);
+        this.#noRepeatPreviousPiece = noRepeatPreviousPiece;
+        this.#showShadowPieces      = showShadowPieces;
+        for (let i = 0; i < 3; i++) 
+            this.#pieces.push( this.#generateNextPiece() );
     }
 
     /**
@@ -173,9 +178,8 @@ class TetrisGame {
         this.#endGame   = false;
         this.#pieces    = [];
         this.#boardGame = this.#createBoardGame(this.#boardGame.length,this.#boardGame[0].length);
-        this.#pieces.push( this.#generateNextPiece() );
-        this.#pieces.push( this.#generateNextPiece(true) );
-        this.#pieces.push( this.#generateNextPiece(true) );
+        for (let i = 0; i < 3; i++) 
+            this.#pieces.push( this.#generateNextPiece() );
     }
 
     /**
@@ -209,24 +213,19 @@ class TetrisGame {
     /**
      * Genera la siguiente pieza que se va a insertar en el array de piezas.
      * 
-     * Si se le pasa como booleano true se generaá una pieza que no coincida con las anteriores
-     * que haya, en ese momento, insertadas en el array.
-     * 
-     * El parámetro es opcional, por defecto es false y se podrían repetir las piezas.
-     * 
-     * @param {Boolean} noRepeatPreviousPiece Booleano que indica si se pueden repetir 
-     *                                          el tipo de piezas que hay en el array
+     * Si al crear la instancia de TetrisGame especificamos que no se repitan las piezas anteriores
+     * se generará una pieza que no coincida con las anteriores que haya, en ese momento, insertadas en el array.
      * 
      * @return {Object} La pieza creada: instancia de la clase Piece.
      */
-    #generateNextPiece = function(noRepeatPreviousPiece = false) {
+    #generateNextPiece = function() {
         let nextPiece = '';
-        if (!noRepeatPreviousPiece) return new Piece(this.#selectRandomPiece(),this.#boardGame,this.#getIntervalTime());
-        if (this.#pieces.length == 0) return new Piece(this.#selectRandomPiece(),this.#boardGame,this.#getIntervalTime());
+        if (!this.#noRepeatPreviousPiece) return new Piece(this.#selectRandomPiece(),this.#boardGame,this.#getIntervalTime(),this.#showShadowPieces);
+        if (this.#pieces.length == 0) return new Piece(this.#selectRandomPiece(),this.#boardGame,this.#getIntervalTime(),this.#showShadowPieces);
         do {
             nextPiece = this.#selectRandomPiece();
         } while (this.#pieces.filter( e => e.getCharacter() == nextPiece ).length != 0);
-        return new Piece(nextPiece,this.#boardGame,this.#getIntervalTime());
+        return new Piece(nextPiece,this.#boardGame,this.#getIntervalTime(),this.#showShadowPieces);
     }
 
     /**
@@ -246,7 +245,7 @@ class TetrisGame {
                 }
                 else if (tetris.#pieces[0].getFixed()) {
                     tetris.#pieces.shift();
-                    tetris.#pieces.push( this.#generateNextPiece(true) );
+                    tetris.#pieces.push( this.#generateNextPiece() );
                     tetris.#cleanboardGame();
                     tetris.#pause();
                     tetris.#idPlay = tetris.#play();
