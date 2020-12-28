@@ -36,9 +36,9 @@ class TetrisGame {
      * @param {Number} numberOfColumns        [Opcional] El número de columnas que componen el tablero.
      * @param {Boolean} noRepeatPreviousPiece [Opcional] Si se desea que no se repitan las piezas con las dos anteriores.
      * @param {Boolean} showShadowPieces      [Opcional] Si se desea que se dibuje la sombra de la pieza.
-     * @param {Number} difficulty             [Opcional] El nivel de dificultad que tendrá el juego, por defecto 1 (normal).
+     * @param {Number} difficulty             [Opcional] El nivel de dificultad que tendrá el juego, por defecto 2 (normal) [0-4].
      */
-    constructor(maxScore, numberOfRows = 20, numberOfColumns = 10, noRepeatPreviousPiece = true, showShadowPieces = true, difficulty = 1) {
+    constructor(maxScore, numberOfRows = 20, numberOfColumns = 10, noRepeatPreviousPiece = true, showShadowPieces = true, difficulty = 2) {
         TetrisGame.#MAX_SCORE       = maxScore;
         this.#boardGame             = this.#createBoardGame(numberOfRows,numberOfColumns);
         this.#noRepeatPreviousPiece = noRepeatPreviousPiece;
@@ -192,7 +192,7 @@ class TetrisGame {
      * @return {Number} El intervalo de tiempo actual.
      */
     #getIntervalTime = function() {
-        const TIME = { '0': 600, '1': 500, '2': 400 }
+        const TIME = { '0': 700, '1': 600, '2': 500, '3': 400, '4': 300 }
         return TIME[this.#difficulty] - 25 * this.getLevel();
     }
 
