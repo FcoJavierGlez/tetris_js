@@ -128,8 +128,8 @@ class Piece {
      */
     #showShadowPiece = function() {
         let coordinatesShadow = [];
-        coordinatesShadow = this.#calculateCoordinatesShadow(this.#coordinates);
-
+        coordinatesShadow = this.#calculateCoordinatesShadow(this.#shadowCoordinates);
+        this.#reLocatePiece(coordinatesShadow,true);
     }
 
     /**
@@ -184,10 +184,12 @@ class Piece {
      * 
      * @param {Array} newCoordinates Array bidimensional compuesto por arrays con las coordendas de la pieza [row,col]
      */
-    #reLocatePiece = function(newCoordinates) {
-        this.#cleanOrPrintPiece();
-        this.#coordinates = this.#validateCoordinates(newCoordinates) ? newCoordinates : this.#coordinates;
-        this.#cleanOrPrintPiece(true);
+    #reLocatePiece = function(newCoordinates,shadowPiece = false) {
+        this.#cleanOrPrintPiece(shadowPiece ? this.#shadowCoordinates : this.#coordinates);
+        shadowPiece ?
+            (this.#shadowCoordinates = this.#validateCoordinates(newCoordinates) ? newCoordinates : this.#shadowCoordinates) :
+            (this.#coordinates = this.#validateCoordinates(newCoordinates) ? newCoordinates : this.#coordinates);
+        this.#cleanOrPrintPiece(shadowPiece ? this.#shadowCoordinates : this.#coordinates,true,shadowPiece);
     }
 
     /**
@@ -349,14 +351,16 @@ class Piece {
      * @param {Boolean} print Si es false (por defecto) elimina la pieza del tablero,
      *                          si es true la vuelve a colocar.
      */
-    #cleanOrPrintPiece = function(print = false) {
-        for (let i = 0; i < this.#coordinates.length; i++) 
-            for (let j = 0; j < this.#coordinates[0].length; j++) {
-                if (!this.#coordinates[i][j].length) continue;
-                const row = this.#coordinates[i][j][0];
-                const col = this.#coordinates[i][j][1];
+    #cleanOrPrintPiece = function(coordinates,print = false,printShadow = false) {
+        for (let i = 0; i < coordinates.length; i++) 
+            for (let j = 0; j < coordinates[0].length; j++) {
+                if (!coordinates[i][j].length) continue;
+                const row = coordinates[i][j][0];
+                const col = coordinates[i][j][1];
                 if (row < 0 || row > this.#boardGame.length || col < 0 || col > this.#boardGame[0].length) continue;
-                this.#boardGame[row][col] = print ? this.#character : ' ';
+                this.#boardGame[row][col] = print ? 
+                                            printShadow ? `s${this.#character}` : this.#character 
+                                            : ' ';
             }
     }
 
