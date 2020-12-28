@@ -14,7 +14,7 @@
 class TetrisGame {
     static #MAX_SCORE   = 0;
     static #LIMIT_SCORE = 999999;
-    static #LIMIT_LEVEL = 20;
+    static #LIMIT_LEVEL = 10;
 
     #lines                 = 0;
     #score                 = 0;
@@ -192,7 +192,8 @@ class TetrisGame {
      * @return {Number} El intervalo de tiempo actual.
      */
     #getIntervalTime = function() {
-        return 600 - parseInt( Math.LN2 * 29 * this.getLevel() );
+        const TIME = { '0': 600, '1': 500, '2': 400 }
+        return TIME[this.#difficulty] - 25 * this.getLevel();
     }
 
     /**
