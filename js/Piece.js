@@ -11,15 +11,16 @@
  */
 
 class Piece {
-    #character        = '';
-    #currentRotation  = 0;
-    #coordinates      = [];
-    #boardGame        = [];
-    #underCollision   = false;
-    #fixed            = false;
-    #idCountdownFixed = 0;
-    #timerToFixed     = 0;
-    #overFlow         = false;
+    #character          = '';
+    #currentRotation    = 0;
+    #coordinates        = [];
+    #shadowCoordinates  = [];
+    #boardGame          = [];
+    #underCollision     = false;
+    #fixed              = false;
+    #idCountdownFixed   = 0;
+    #timerToFixed       = 0;
+    #overFlow           = false;
 
     /**
      * Constructor. Recibe como parámetro el tipo de pieza a construir (en forma de caracter),
@@ -31,10 +32,11 @@ class Piece {
      * @param {Number} gameIntervalTime 
      */
     constructor(character,boardGame,gameIntervalTime) {
-        this.#character    = character;
-        this.#boardGame    = boardGame;
-        this.#timerToFixed = 500 + gameIntervalTime;
-        this.#coordinates  = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
+        this.#character         = character;
+        this.#boardGame         = boardGame;
+        this.#timerToFixed      = 500 + gameIntervalTime;
+        this.#coordinates       = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
+        this.#shadowCoordinates = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
     }
 
     /**
