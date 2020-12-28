@@ -96,6 +96,15 @@ class TetrisGame {
     }
 
     /**
+     * Devuelve la dificultad del juego comprendido en un rango [0-4]
+     * 
+     * @return {Number} La dificultad del juego, siendo 0 'Muy fácil' y 4 'Muy difícil.
+     */
+    getDifficulty = function() {
+        return this.#difficulty;
+    }
+
+    /**
      * Devuelve si el juego ha finalizado.
      * 
      * @return {Boolean} Estado finalizado de la partida.
