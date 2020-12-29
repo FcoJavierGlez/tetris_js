@@ -20,6 +20,75 @@
 main {
     background-color: rgb(200, 200, 200);
 }
+
+.configPanel {
+    height: 70vh;
+    width: 50%;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 15px;
+    position: absolute;
+    z-index: 4;
+    margin: 15vh 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Digital-clock';
+    font-size: 22px;
+    color: #000;
+}
+
+.infoPanel {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    height: 95%;
+    width: 95%;
+}
+
+fieldset {
+    display: grid;
+    align-content: flex-start;
+    row-gap: 20px;
+}
+
+fieldset h3 {
+    text-align: center;
+    margin: 8px 0;
+}
+fieldset h4 {
+    margin: 8px 0;
+    text-decoration: underline;
+}
+
+.options-panel-config {
+    display: flex;
+    flex-flow: column;
+}
+
+.buttonStart {
+    display: flex;
+    justify-content: center;
+    min-height: 25vh;
+    align-items: center;
+}
+#start {
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: rgb(0, 220, 0);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    height: 75px;
+    width: 75px;
+}
+#start:hover {
+    background-color: rgb(0, 250, 0);
+    color: black;
+}
+#start:focus {
+    outline: none;
+}
+
 .pauseScreen {
     background-color: rgba(50, 50, 50, 0.4);
     height: 76vh;
