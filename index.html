@@ -17,6 +17,40 @@
         <noscript>
             <h3>Esta página requiere el uso de JavaScript para su funcionamiento.</h3>
         </noscript>
+        <div id="config-panel" class="configPanel">
+            <div class="infoPanel">
+                <div>
+                    <div id="difficulty-text">
+                        <h2>DIFFICULTY</h2>
+                        <h3>&#x1F3AE; NORMAL &#x1F3AE;</h3>
+                        <p><b><u>NORMAL</u>:</b> Dificultad estándar para alguien acostumbrado a jugar al Tetris.</p>
+                    </div>
+                    <div id="options-image">
+                        <h2>CLASSIC VERSION</h2>
+                        <p>Juega repitiendo piezas y sin ver la sombra de la posición en la que van a caer.</p>
+                        <div class="backimage classic"></div>
+                    </div>
+                </div>
+                <fieldset>
+                    <div class="options-panel-config">
+                        <h4>Difficulty</h4>
+                        <label><input type="radio" name="difficulty" value="0"> Rainbow</label>
+                        <label><input type="radio" name="difficulty" value="1"> Easy</label>
+                        <label><input type="radio" name="difficulty" value="2" checked> Normal</label>
+                        <label><input type="radio" name="difficulty" value="3"> Hard</label>
+                        <label><input type="radio" name="difficulty" value="4"> Heavy metal</label>
+                    </div>
+                    <div class="options-panel-config">
+                        <h4>Options</h4>
+                        <label><input type="checkbox" id="noRepeat"> No repeat next piece</label>
+                        <label><input type="checkbox" id="shadow"> Show shadow</label>
+                    </div>
+                    <div class="buttonStart">
+                        <button id="start">START</button>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
         <div id="pause-screen" class="pauseScreen">
             <div id="pause" class="pause">
                 <div>PAUSE</div>
@@ -46,7 +80,7 @@
                     <div>
                         <h3>Next</h3>
                         <div id="next-piece"></div>
-                        <h3>Level</h3>
+                        <h3>Level / Difficulty</h3>
                         <div id="level"></div>
                         <h3>Lines</h3>
                         <div id="lines"></div>
