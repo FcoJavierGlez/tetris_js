@@ -45,6 +45,51 @@ main {
     width: 95%;
 }
 
+.infoPanel > div {
+    display: grid;
+    grid-template-rows: 30% 1fr;
+    row-gap: 5px;
+}
+
+#difficulty-text, #options-image {
+    border: 1px solid black;
+}
+.infoPanel > div h2{
+    text-align: center;
+}
+.infoPanel > div p{
+    margin: 8px;
+    font-family: 'Roboto';
+}
+
+#difficulty-text h2 {
+    margin: 2px 0;
+}
+#difficulty-text h3 {
+    margin: 6px 0;
+    text-align: center;
+}
+
+.backimage {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 80%;
+}
+
+.classic {
+    background-image: url(../img/options/classic.png);
+}
+.no-repeat {
+    background-image: url(../img/options/no_repeat.png);
+}
+.shadow {
+    background-image: url(../img/options/shadow.PNG);
+}
+.modern {
+    background-image: url(../img/options/modern.PNG);
+}
+
 fieldset {
     display: grid;
     align-content: flex-start;
@@ -63,6 +108,13 @@ fieldset h4 {
 .options-panel-config {
     display: flex;
     flex-flow: column;
+}
+
+input[type='radio']:focus {
+    outline: none;
+}
+input[type='checkbox']:focus {
+    outline: none;
 }
 
 .buttonStart {
