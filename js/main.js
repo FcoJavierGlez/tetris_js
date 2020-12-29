@@ -155,7 +155,7 @@
             tetris.reset();
             renderGrid(boardGame,tetris.getBoardGame());
             renderGrid(nextPieceDOM,[]);
-            level.innerHTML = tetris.getLevel();
+            level.innerHTML = `<div>${tetris.getLevel()}</div><div id="difficulty">${getNameLevel(tetris.getDifficulty())}</div>`;
             lines.innerHTML = tetris.getLines();
             score.innerHTML = tetris.getScore();
             showPauseScreen();
