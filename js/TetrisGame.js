@@ -192,6 +192,7 @@ class TetrisGame {
     reset = function() {
         this.#score = this.#lines = this.#idPlay = 0;
         this.#endGame   = false;
+        this.#paused    = true;
         this.#pieces    = [];
         this.#boardGame = this.#createBoardGame(this.#boardGame.length,this.#boardGame[0].length);
         for (let i = 0; i < 3; i++) 
