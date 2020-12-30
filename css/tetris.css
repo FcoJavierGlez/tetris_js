@@ -23,18 +23,18 @@ main {
 
 .configPanel {
     height: 70vh;
-    width: 50%;
+    width: 90%;
     background-color: white;
     border: 2px solid black;
     border-radius: 15px;
     position: absolute;
     z-index: 4;
-    margin: 15vh 25%;
+    margin: 15vh 5%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Digital-clock';
-    font-size: 22px;
+    font-size: 16px;
     color: #000;
 }
 
@@ -60,6 +60,7 @@ main {
 .infoPanel > div p{
     margin: 8px;
     font-family: 'Roboto';
+    font-size: 0.8rem;
 }
 
 #difficulty-text h2 {
@@ -74,7 +75,7 @@ main {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    height: 80%;
+    height: 65%;
 }
 
 .classic {
@@ -103,6 +104,10 @@ fieldset h3 {
 fieldset h4 {
     margin: 8px 0;
     text-decoration: underline;
+}
+
+label {
+    font-size: 0.8rem;
 }
 
 .options-panel-config {
@@ -375,6 +380,11 @@ input[type='checkbox']:focus {
         height: 25px;
         font-size: 0.85rem;
     }
+    #start {
+        height: 85px;
+        width: 85px;
+        font-size: 22px;
+    }
 }
 @media only screen and (min-width: 700px) and (min-height: 760px) {
     #board {
@@ -396,6 +406,12 @@ input[type='checkbox']:focus {
         width: var(--width_square_shadow_min_550);
         border-radius: 5px;
     }
+    .backimage {
+        height: 70%;
+    }
+    .configPanel {
+        font-size: 18px;
+    }
 }
 @media only screen and (min-width: 900px) {
     .instructions {
@@ -412,6 +428,16 @@ input[type='checkbox']:focus {
     }
     #message button {
         height: 30px;
+        font-size: 1rem;
+    }
+    .configPanel {
+        width: 70%;
+        margin: 15vh 15%;
+    }
+    .infoPanel > div p{
+        font-size: 1rem;
+    }
+    label {
         font-size: 1rem;
     }
 }
@@ -461,4 +487,31 @@ input[type='checkbox']:focus {
     #difficulty {
         font-size: 30px;
     }
+    .infoPanel > div p{
+        font-size: 1.2rem;
+    }
+    label {
+        font-size: 1.2rem;
+    }
+    #start {
+        height: 95px;
+        width: 95px;
+        font-size: 25px;
+    }
+}
+@media only screen and (min-width: 1300px) and (min-height: 900px) {
+    .configPanel {
+        font-size: 20px;
+    }
+    .backimage {
+        height: 80%;
+    }
+}
+@media only screen and (min-width: 1900px) {
+    .configPanel {
+        width: 50%;
+        margin: 15vh 25%;
+        font-size: 22px;
+    }
+    
 }
