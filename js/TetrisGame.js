@@ -19,6 +19,7 @@ class TetrisGame {
     #lines                 = 0;
     #score                 = 0;
     #idPlay                = 0;
+    #idAnimationRows       = 0;
     #difficulty            = 0;
     #boardGame             = [];
     #pieces                = [];
@@ -261,10 +262,10 @@ class TetrisGame {
                     tetris.#pieces.shift();
                     tetris.#pieces.push( this.#generateNextPiece() );
                     tetris.#cleanboardGame();
-                    tetris.#pause();
-                    tetris.#idPlay = tetris.#play();
+                    /* tetris.#pause();
+                    tetris.#idPlay = tetris.#play(); */
                 }
-                if (!tetris.#pieces[0].getUnderCollision())
+                if (!tetris.#pieces[0].getUnderCollision() && tetris.#idPlay != 0) // !tetris.#pieces[0].getUnderCollision()
                     tetris.#pieces[0].move(1);
             }, tetris.#getIntervalTime() );
     }
@@ -344,25 +345,37 @@ class TetrisGame {
         this.#boardGame[currentRow] = replaceByThisRow < 0 ? [' ',' ',' ',' ',' ',' ',' ',' ',' ',' '] : this.#boardGame[replaceByThisRow];
     }
 
+    #animationCompletedRows = function(rows) {
+        for (let i = 0; i < rows.length; i++) 
+            this.#boardGame[rows[i]] = ['rC','rC','rC','rC','rC','rC','rC','rC','rC','rC'];
+    }
 
     /**
      * Limpia el tablero de todas aquellas filas completas e incrementa el número de líneas el total
      * de puntos obtenidos al hacerlo.
      */
     #cleanboardGame = function() {
+        let tetris       = this;
         let rowToClean = [];
         let rowToCopy  = this.#boardGame.length;
         for (let i = this.#boardGame.length - 1; i > -1; i--) 
             this.#checkCleanRow(this.#boardGame[i]) ? rowToClean.push(i) : false;
         if (rowToClean.length == 0) return;
-        this.#lines += rowToClean.length;
-        this.#score = (this.#score += this.#countPointsEarned(rowToClean.length)) > TetrisGame.#LIMIT_SCORE ? TetrisGame.#LIMIT_SCORE : this.#score;
-        for (let currentRow = this.#boardGame.length - 1; currentRow > -1; currentRow--) {
-            if (currentRow > rowToClean[0]) continue;
-            do {
-                --rowToCopy;
-            } while (rowToCopy > currentRow || rowToClean.includes(rowToCopy));
-            this.#replaceRowByOtherRow(currentRow,rowToCopy);
-        }
+        this.#animationCompletedRows(rowToClean);
+        this.#pause();
+        this.#idAnimationRows = setInterval( () => {
+            tetris.#lines += rowToClean.length;
+            tetris.#score = (tetris.#score += tetris.#countPointsEarned(rowToClean.length)) > TetrisGame.#LIMIT_SCORE ? TetrisGame.#LIMIT_SCORE : tetris.#score;
+            for (let currentRow = tetris.#boardGame.length - 1; currentRow > -1; currentRow--) {
+                if (currentRow > rowToClean[0]) continue;
+                do {
+                    --rowToCopy;
+                } while (rowToCopy > currentRow || rowToClean.includes(rowToCopy));
+                tetris.#replaceRowByOtherRow(currentRow,rowToCopy);
+            }
+            clearInterval(tetris.#idAnimationRows);
+            tetris.#idAnimationRows = 0;
+            tetris.#idPlay = tetris.#play();
+        },250);
     }
 }
