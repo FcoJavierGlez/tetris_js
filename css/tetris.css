@@ -507,6 +507,9 @@ input[type='checkbox']:focus {
     .backimage {
         height: 80%;
     }
+    label {
+        font-size: 1.4rem;
+    }
 }
 @media only screen and (min-width: 1900px) {
     .configPanel {
@@ -514,5 +517,4 @@ input[type='checkbox']:focus {
         margin: 15vh 25%;
         font-size: 22px;
     }
-    
 }
