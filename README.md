@@ -57,3 +57,7 @@ Puedes acceder a través del siguiente enlace: **[Juego del Tetris](https://fcoj
 </p>
 
 ![captura7](img_readme/captura7.png)  *Si alguna pieza queda bloqueada rebasando la parte superior del tablero la partida acabará inmediatamente.*
+
+## License
+
+Copyright (c) 2021 Francisco Javier, González Sabariego. Licensed under the MIT license.
