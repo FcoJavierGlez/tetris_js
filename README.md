@@ -10,6 +10,10 @@
 
 ---
 
+## License
+
+Copyright (c) 2021 Francisco Javier González Sabariego. [Licensed under the MIT license](https://github.com/FcoJavierGlez/tetris_js/blob/main/LICENSE).
+
 ## Acceso al juego:
 
 Puedes acceder a través del siguiente enlace: **[Juego del Tetris](https://fcojavierglez.github.io/tetris_js/)**.
@@ -58,6 +62,22 @@ Puedes acceder a través del siguiente enlace: **[Juego del Tetris](https://fcoj
 
 ![captura7](img_readme/captura7.png)  *Si alguna pieza queda bloqueada rebasando la parte superior del tablero la partida acabará inmediatamente.*
 
-## License
+## Dificultad:
 
-Copyright (c) 2021 Francisco Javier, González Sabariego. Licensed under the MIT license.
+He considerado que la velocidad del juego escale en función a la dificultad elegida en el panel de configuración inicial y del nivel actual que posea el jugador [0-10]. Por ello la dificultad del juego se divide en rangos de velocidad (dificultad elegida) y escalado porcentual por el nivel actual.
+
+### Rangos de velocidad:
+
+Los rangos de velocidad son únicos para cada dificultad y están comprendidos desde un valor máximo (nivel 0) y mínimo (nivel 10).
+
+![range_speed](img_readme/range_speed.png)  *Rangos de velocidad*
+
+### Escalado porcentual:
+
+Conforme el jugador va incrementado sus niveles la velocidad del juego incrementa de forma porcentual, disminuyendo el delay de movimiento automático de la pieza entre el rango máximo y mínimo de su dificultad.
+
+![percentage_by_level](img_readme/percentage_by_level.png)  *Escalado porcentual*
+
+De esta forma obtenemos una curvatura para cada dificultad y nivel:
+
+![chart_difficulty](img_readme/chart_difficulty.png)  *Curvatura de disminución del delay de movmiento automático*
