@@ -80,4 +80,4 @@ Conforme el jugador va incrementado sus niveles la velocidad del juego increment
 
 De esta forma obtenemos una curvatura para cada dificultad y nivel:
 
-![chart_difficulty](img_readme/chart_difficulty.png)  *Curvatura de disminución del delay de movimiento automático*
+![chart_difficulty](img_readme/chart_difficulty.png)  *Curvatura de disminución del delay*
