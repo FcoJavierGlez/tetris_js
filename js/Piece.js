@@ -37,7 +37,7 @@ class Piece {
         this.#character         = character;
         this.#boardGame         = boardGame;
         this.#shadowPiece       = shadowPiece;
-        this.#timerToFixed      = 500 + gameIntervalTime;
+        this.#timerToFixed      = 300 + gameIntervalTime;
         this.#coordinates       = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
         this.#shadowCoordinates = this.#createInitialCoordinates(this.#character,this.#boardGame[0].length);
     }
