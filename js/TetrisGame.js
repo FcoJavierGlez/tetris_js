@@ -213,7 +213,7 @@ class TetrisGame {
             '4': {'max': 300,'min': 100}
         };
         const PERCENTAGE_BY_LEVEL = { '0': 0, '1': 2, '2': 4, '3': 7, '4': 11, '5': 17, '6': 25, '7': 38, '8': 55, '9': 75, '10': 100 };
-        return SPEED_BY_DIFFICULTY[this.#difficulty].max - (SPEED_BY_DIFFICULTY[this.#difficulty].max - SPEED_BY_DIFFICULTY[this.#difficulty].min) * PERCENTAGE_BY_LEVEL[this.getLevel()] / 100;
+        return parseInt(SPEED_BY_DIFFICULTY[this.#difficulty].max - (SPEED_BY_DIFFICULTY[this.#difficulty].max - SPEED_BY_DIFFICULTY[this.#difficulty].min) * PERCENTAGE_BY_LEVEL[this.getLevel()] / 100);
     }
 
     /**
