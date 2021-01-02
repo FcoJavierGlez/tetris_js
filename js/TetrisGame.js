@@ -205,8 +205,15 @@ class TetrisGame {
      * @return {Number} El intervalo de tiempo actual.
      */
     #getIntervalTime = function() {
-        const TIME = { '0': 700, '1': 600, '2': 500, '3': 400, '4': 300 }
-        return TIME[this.#difficulty] - 25 * this.getLevel();
+        const SPEED_BY_DIFFICULTY = {
+            '0': {'max': 1000,'min': 600 },
+            '1': {'max': 800,'min': 450},
+            '2': {'max': 600,'min': 300},
+            '3': {'max': 450,'min': 200},
+            '4': {'max': 300,'min': 100}
+        };
+        const PERCENTAGE_BY_LEVEL = { '0': 0, '1': 2, '2': 4, '3': 7, '4': 11, '5': 17, '6': 25, '7': 38, '8': 55, '9': 75, '10': 100 };
+        return SPEED_BY_DIFFICULTY[this.#difficulty].max - (SPEED_BY_DIFFICULTY[this.#difficulty].max - SPEED_BY_DIFFICULTY[this.#difficulty].min) * PERCENTAGE_BY_LEVEL[this.getLevel()] / 100;
     }
 
     /**
