@@ -64,7 +64,7 @@ Puedes acceder a través del siguiente enlace: **[Juego del Tetris](https://fcoj
 
 ## Dificultad:
 
-He considerado que la velocidad del juego escale en función a la dificultad elegida en el panel de configuración inicial y del nivel actual que posea el jugador [0-10]. Por ello la dificultad del juego se divide en rangos de velocidad (dificultad elegida) y escalado porcentual por el nivel actual.
+He considerado que la velocidad del juego escale en función a la dificultad elegida (panel de configuración inicial) y del nivel actual que posea el jugador [0-10]. Por ello la dificultad del juego se divide en rangos de velocidad (dificultad elegida) y escalado porcentual según el nivel actual del jugador.
 
 ### Rangos de velocidad:
 
@@ -80,4 +80,4 @@ Conforme el jugador va incrementado sus niveles la velocidad del juego increment
 
 De esta forma obtenemos una curvatura para cada dificultad y nivel:
 
-![chart_difficulty](img_readme/chart_difficulty.png)  *Curvatura de disminución del delay de movmiento automático*
+![chart_difficulty](img_readme/chart_difficulty.png)  *Curvatura de disminución del delay de movimiento automático*
