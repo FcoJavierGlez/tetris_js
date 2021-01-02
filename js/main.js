@@ -84,7 +84,7 @@
                     level.innerHTML = `<div>${game.getLevel()}</div><div id="difficulty">${getNameLevel(game.getDifficulty())}</div>`;
                     lines.innerHTML = game.getLines();
                     score.innerHTML = game.getScore();
-                }, 50);
+                }, 25);
         }
     
         const pauseRender = () => {
